@@ -4,10 +4,16 @@
   <% @leagues.each do |league| %>
   <p> <%=link_to "#{league.league_name}", league_path(league) %></p>
   <%  end   %>
+  <div> <%= link_to "Click here to see available leagues!", leagues_path  %> </div>
 <% else %>
   <h1> Welcome to NFL Confidence Pool! </h1>
   <p>
     This is an app built to allow you to pick the NFL games each weekend.
     Gonna be a short blurb about rules of the game!
   </p>
+  <div class="logInSignUp">
+    <span id="signIn"><%= link_to "Registered users click here to sign in", user_session_path %></span>
+    <br>
+    <span id="signUp"><%= link_to "Sign up here to continue!" ,new_user_registration_path %></span>
+  </div>
 <% end %>
