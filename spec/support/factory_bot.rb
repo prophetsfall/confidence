@@ -15,7 +15,7 @@ FactoryBot.define do
 
   FactoryBot.define do
     factory :league do
-      sequence(:league) { |n| "league#{n}"}
+      sequence(:league_name) { |n| "league#{n}"}
     end
   end
 

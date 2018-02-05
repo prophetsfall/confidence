@@ -1,9 +1,8 @@
 <% if current_user %>
   <h1>Welcome <%=current_user.first_name  %></h1>
-
-  <% @leagues.each do |league| %>
-  <p> <%=link_to "#{league.league_name}", league_path(league) %></p>
-  <%  end   %>
+    <% @leagues.each do |league| %>
+      <p> <%=link_to "#{league.league_name}", league_path(league) %></p>
+    <%  end   %>
   <div> <%= link_to "Click here to see available leagues!", leagues_path  %> </div>
 <% else %>
   <h1> Welcome to NFL Confidence Pool! </h1>
@@ -12,7 +11,7 @@
     Gonna be a short blurb about rules of the game!
   </p>
   <div class="logInSignUp">
-    <span id="signIn"><%= link_to "Registered users click here to sign in", user_session_path %></span>
+    <span id="signIn"><%= link_to "Registered users click here to sign in!", user_session_path %></span>
     <br>
     <span id="signUp"><%= link_to "Sign up here to continue!" ,new_user_registration_path %></span>
   </div>
