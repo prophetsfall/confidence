@@ -1,0 +1,4 @@
+<h1>Leagues Home Page</h1>
+<% @open_leagues.each do |league| %>
+<p><%= link_to league.league_name, league_path(league) %></p>
+<% end %>

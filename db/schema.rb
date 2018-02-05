@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180205161117) do
+ActiveRecord::Schema.define(version: 20180205182419) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,8 @@ ActiveRecord::Schema.define(version: 20180205161117) do
     t.string "league_name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "max_members", default: 100, null: false
+    t.index ["league_name"], name: "index_leagues_on_league_name", unique: true
   end
 
   create_table "memberships", force: :cascade do |t|
