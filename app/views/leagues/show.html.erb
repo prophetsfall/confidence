@@ -7,5 +7,6 @@
 <% end %>
 </ul>
 </div>
-
-<%= link_to "Join this league",  %>
+<% if !@members.find_by_id(current_user.id) %>
+<%= link_to "Join this league", league_memberships_path(@league), method: :post  %>
+<% end %>
