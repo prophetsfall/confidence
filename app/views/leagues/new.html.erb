@@ -1,0 +1,36 @@
+<h1>I am a New League Form</h1>
+<%= form_for @league do |f| %>
+  <% if @league.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@league.errors.count, "error") %> prohibited this League from being saved:</h2>
+      <ul>
+        <% @league.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div className="newLeague">
+    <p class="field">
+      <%= f.label :league_name %>
+      <%= f.text_area :league_name %>
+    </p>
+    <p class="field">
+      <%= f.label :max_members %>
+      <%= f.text_area :max_members %>
+    </p>
+    <p class="field">
+      <%= f.label :invite_only, "Create Private League" %>
+      <%= f.radio_button :invite_only, 1 %>
+
+      <%= f.label :invite_only, "Create Public League" %>
+      <%= f.radio_button :invite_only, 2 %>
+    </p>
+
+    <div class="field">
+      <%= f.submit "Create League" %>
+    </div>
+
+  </div>
+<% end %>
