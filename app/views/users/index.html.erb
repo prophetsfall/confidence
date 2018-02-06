@@ -4,6 +4,7 @@
       <p> <%=link_to "#{league.league_name}", league_path(league) %></p>
     <%  end   %>
   <div> <%= link_to "Click here to see available leagues!", leagues_path  %> </div>
+  <div> <%= link_to "Click here to create a custom league!", new_league_path  %> </div>
 <% else %>
   <h1> Welcome to NFL Confidence Pool! </h1>
   <p>
