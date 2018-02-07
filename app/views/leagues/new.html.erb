@@ -16,21 +16,22 @@
       <%= f.label :league_name %>
       <%= f.text_area :league_name %>
     </p>
+
     <p class="field">
       <%= f.label :max_members %>
       <%= f.text_area :max_members %>
     </p>
-    <p class="field">
-      <%= f.label :invite_only, "Create Private League" %>
-      <%= f.radio_button :invite_only, 1 %>
 
+    <p class="field">
+      <%= f.radio_button :invite_only, 1, {id: "private-league-button"} %>
+      <%= f.label :invite_only, "Create Private League" %>
+
+      <%= f.radio_button :invite_only, 2, {id: "public-league-button"} %>
       <%= f.label :invite_only, "Create Public League" %>
-      <%= f.radio_button :invite_only, 2 %>
     </p>
 
     <div class="field">
       <%= f.submit "Create League" %>
     </div>
-
   </div>
 <% end %>

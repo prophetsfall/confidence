@@ -10,18 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180206142343) do
+ActiveRecord::Schema.define(version: 20180207165846) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "games", force: :cascade do |t|
     t.bigint "week_id"
-    t.string "home_team", null: false
-    t.string "away_team", null: false
+    t.bigint "home_team_id"
+    t.bigint "away_team_id"
     t.integer "winner_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["away_team_id"], name: "index_games_on_away_team_id"
+    t.index ["home_team_id"], name: "index_games_on_home_team_id"
     t.index ["id", "week_id"], name: "index_games_on_id_and_week_id", unique: true
     t.index ["week_id"], name: "index_games_on_week_id"
   end
