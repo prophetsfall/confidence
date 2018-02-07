@@ -13,6 +13,8 @@ class LeaguesController < ApplicationController
 
   def show
     @league = League.find_by_id(params[:id])
+    @current_week = current_week
+    @games = current_week_games
     if @league
       @members = @league.users
       if @league.public_league? || @members.find_by_id(current_user.id)

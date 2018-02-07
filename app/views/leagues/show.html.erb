@@ -10,4 +10,16 @@
 <% if !@members.find_by_id(current_user.id) %>
 <%= link_to "Join this league", league_memberships_path(@league), method: :post  %>
 <% end %>
-<h2></h2>
+<h2>Games for Week <%= @current_week.week_number %></h2>
+<div className="leagueGameList">
+  <ul>
+    <% @games.each do |game| %>
+
+    <li>
+  <span><%= game.away_team.location %> <%=game.away_team.team_name%>
+    at
+    <%= game.home_team.location %> <%= game.home_team.team_name %> </span>
+    </li>
+    <% end %>
+  </ul>
+</div>
