@@ -11,15 +11,17 @@
 <%= link_to "Join this league", league_memberships_path(@league), method: :post  %>
 <% end %>
 <h2>Games for Week <%= @current_week.week_number %></h2>
+<h3> <%= link_to "Click here to pick the games!",league_picks_path(@league.id) %> </h3>
 <div className="leagueGameList">
   <ul>
     <% @games.each do |game| %>
-
-    <li>
-  <span><%= game.away_team.location %> <%=game.away_team.team_name%>
-    at
-    <%= game.home_team.location %> <%= game.home_team.team_name %> </span>
-    </li>
+      <li>
+        <span className="matchup">
+          <%= game.away_team.location %> <%=game.away_team.team_name%>
+          at
+          <%= game.home_team.location %> <%= game.home_team.team_name %>
+        </span>
+      </li>
     <% end %>
   </ul>
 </div>

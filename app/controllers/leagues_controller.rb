@@ -1,5 +1,6 @@
 class LeaguesController < ApplicationController
   before_action :authenticate_user!
+
   def index
     @open_leagues = []
     leagues = League.all
@@ -13,8 +14,8 @@ class LeaguesController < ApplicationController
 
   def show
     @league = League.find_by_id(params[:id])
-    @current_week = current_week
-    @games = current_week_games
+    @current_week = Week.current_week
+    @games = @current_week.games
     if @league
       @members = @league.users
       if @league.public_league? || @members.find_by_id(current_user.id)
