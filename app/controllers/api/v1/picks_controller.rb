@@ -4,12 +4,16 @@ class Api::V1::PicksController < ApplicationController
     render json: { games:game_details}
   end
 
-  # def serialized_games
-  #   all_games =  Week.current_week.games
-  #   all_games.map do |game|
-  #     GamesSerializer.new(game)
-  #   end
-  # end
+  def create
+    Pick.delete(user_picks)
+    @league_id = params[:leagueID]
+    @week_id = Week.current_week.id
+    picks = params[:picks]
+    picks.each do |pick|
+      Pick.create!(user_id:current_user.id, league_id:@league_id ,game_id:pick[:gameId], week_id:@week_id , winning_team:pick[:winningTeamId], confidence:pick[:confidenceScore])
+    end
+    render json: {picks: pick_details}
+  end
 
   def game_details
     all_games =  Week.current_week.games
@@ -29,6 +33,24 @@ class Api::V1::PicksController < ApplicationController
       away_team_id: game.away_team.id,
       winner_id: nil
 
+    }
+  end
+
+  def user_picks
+   Pick.where('user_id = ? AND league_id =? and week_id = ?', current_user.id, @league_id, @week_id)
+  end
+
+  def pick_details
+    user_picks.map do |pick|
+      pick_hash(pick)
+    end
+  end
+
+  def pick_hash(pick)
+    {
+      gameId:pick.game_id,
+      winningTeamId:pick.winning_team,
+      confidenceScore: pick.confidence
     }
   end
 
