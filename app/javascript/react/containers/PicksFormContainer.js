@@ -12,6 +12,8 @@ class PicksFormContainer extends Component {
     }
     this.handleSelectWinner = this.handleSelectWinner.bind(this)
     this.handleConfidenceAssignment = this.handleConfidenceAssignment.bind(this)
+    this.formSubmission = this.formSubmission.bind(this)
+    this.submitPicks = this.submitPicks.bind(this)
   }
 
   componentDidMount() {
@@ -33,14 +35,54 @@ class PicksFormContainer extends Component {
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
-  handleSelectWinner(event, gameId){
+  formSubmission(event) {
     event.preventDefault()
-    let winnerId = event.target.id
-    let winners = this.state.winners
+    let formPayload = {
+      leagueID: this.state.leagueID,
+      picks:this.state.picks
+    }
+    this.submitPicks(formPayload)
   }
 
-  handleConfidenceAssignment(event, originalScore){
-    let score = parseInt(event.target.value);
+  submitPicks(formPayload) {
+    fetch('/api/v1/picks', {
+        credentials: 'same-origin',
+        method: 'post',
+        body: JSON.stringify(formPayload),
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest',
+          'X-CSRF-Token': $('meta[name=csrf-token]').attr('content')
+        }
+      })
+      .then(response => {
+      if (response.ok) {
+        return response;
+      } else {
+        let errorMessage = `${response.status} (${response.statusText})`,
+        error = new Error(errorMessage);
+        throw(error);
+      }
+    })
+    .then(response => response.json())
+    .then(body => {
+        this.setState({picks:body.picks})
+    })
+    .catch(error => console.error(`Error in fetch: ${error.message}`));
+  }
+
+  handleSelectWinner(winner,confidence,gameId){
+    // event.preventDefault()
+    let winnerId = winner
+    let confidenceScore = confidence
+    let pickedgameId = gameId
+    let picks = this.state.picks.filter(pick => pick.gameId != pickedgameId )
+    let pick = [{gameId:pickedgameId, winningTeamId:winnerId, confidenceScore:confidenceScore}]
+    let newPicks = picks.concat(pick)
+    this.setState({ picks:newPicks})
+  }
+
+  handleConfidenceAssignment(score, originalScore, gameId, winningTeam){
     let availableConfidenceScores = this.state.availableConfidenceScores
     let newAvailableScores = availableConfidenceScores.filter(eachScore => eachScore != score)
     if (originalScore) {
@@ -49,8 +91,11 @@ class PicksFormContainer extends Component {
       }
       newAvailableScores.splice(originalScore,0, originalScore)
       newAvailableScores.sort(compareNumbers)
-      }
-    this.setState({availableConfidenceScores:newAvailableScores})
+    }
+    let picks = this.state.picks.filter(pick => pick.gameId != gameId )
+    let pick = [{gameId:gameId, winningTeamId:winningTeam, confidenceScore:score}]
+    let newPicks = picks.concat(pick)
+    this.setState({availableConfidenceScores:newAvailableScores, picks:newPicks})
   }
 
 
@@ -77,7 +122,7 @@ class PicksFormContainer extends Component {
     })
 
     return(
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={this.formSubmission}>
         <div className="PicksFormContainer">
           hi from picks container
           {games}
