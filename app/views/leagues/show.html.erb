@@ -1,11 +1,14 @@
 <h2 class="welcomeHeader">League Homepage for <%= @league.league_name %></h1>
 <div class="memberList">
-  League Members
-  <ul>
-  <% @members.each do |member|%>
-<li>  <%= member.username %> </li>
+  League Standings:
+  <ol>
+  <% @scores.each do |score|%>
+  <li>
+    <%=score[:username]%> | Season Score:
+    <%=score[:score_season]%>
+  </li>
 <% end %>
-</ul>
+</ol>
 </div>
 
 <% if !@members.find_by_id(current_user.id) %>

@@ -12,4 +12,17 @@ class League < ApplicationRecord
     invite_only == 2
   end
 
+  def self.league_scores(league_id)
+    league = League.find(league_id)
+    members = league.memberships
+    scores = members.map do |member|
+      {
+        username: member.user.username,
+        score_week: Membership.weekly_score(member.user_id,league_id, Week.current_week ),
+        score_season: member.score
+      }
+    end
+    scores = scores.sort_by { |k| k[:score_season]}.reverse
+  end
+
 end

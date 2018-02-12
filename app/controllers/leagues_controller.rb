@@ -17,11 +17,11 @@ class LeaguesController < ApplicationController
     @current_week = Week.current_week
     @games = @current_week.games
     @picks = Pick.user_picks(current_user.id, @league.id, @current_week.id)
-    @week_score = Membership.weekly_score(current_user.id, @league.id, @current_week.id)
-    @season_score = Membership.season_score(current_user.id, @league.id)
+    @scores = League.league_scores(@league.id)
     if @league
       @members = @league.users
       if @league.public_league? || @members.find_by_id(current_user.id)
+        League.league_scores(@league.id)
         render :show
       else
         redirect_to leagues_path
