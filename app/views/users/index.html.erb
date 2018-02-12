@@ -1,12 +1,20 @@
 <% if current_user %>
-  <h1>Welcome <%=current_user.first_name  %></h1>
-    <% @leagues.each do |league| %>
-      <p> <%=link_to "#{league.league_name}", league_path(league) %></p>
-    <%  end   %>
+<h2 class="welcomeHeader">Welcome <%=current_user.first_name%></h2>
+<div class="leagueLinks">
   <div> <%= link_to "Click here to see available leagues!", leagues_path  %> </div>
   <div> <%= link_to "Click here to create a custom league!", new_league_path  %> </div>
+</div>
+    <% @memberships.each do |membership| %>
+    <p class="leagueLink">
+      <%=link_to "#{ membership.league.league_name}", league_path(membership.league)%>
+      <%="Score for week #{Week.current_week.week_number}: "%>
+      <%= Membership.weekly_score(membership.user_id, membership.league_id,Week.current_week) %>
+      :::
+      <%= "Score for #{Week.current_week.year}: #{membership.score}" %>
+    </p>
+    <%  end   %>
 <% else %>
-  <h1> Welcome to NFL Confidence Pool! </h1>
+  <h2 class ="welcomeHeader"> Welcome to NFL Confidence Pool! </h2>
   <p>
     This is an app built to allow you to pick the NFL games each weekend.
     Gonna be a short blurb about rules of the game!

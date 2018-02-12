@@ -1,18 +1,42 @@
 class Api::V1::PicksController < ApplicationController
 
   def index
-    render json: { games:game_details}
+    render json: { games:game_details, availableScores: available_confidence_scores}
   end
 
   def create
-    Pick.delete(user_picks)
     @league_id = params[:leagueID]
     @week_id = Week.current_week.id
-    picks = params[:picks]
-    picks.each do |pick|
-      Pick.create!(user_id:current_user.id, league_id:@league_id ,game_id:pick[:gameId], week_id:@week_id , winning_team:pick[:winningTeamId], confidence:pick[:confidenceScore])
+    pick_params = params[:picks]
+    picks = []
+
+    pick_params.each do |pick|
+      picks <<  Pick.new(
+        user_id:current_user.id,
+        league_id:@league_id ,
+        game_id:pick[:gameId],
+        week_id:@week_id ,
+        winning_team:pick[:winningTeamId],
+        confidence:pick[:confidenceScore]
+      )
     end
-    render json: {picks: pick_details}
+    if picks.map(&:save)
+      render json: {picks: pick_details}
+    else
+      render json: {
+        picks: pick_details,
+        errors: new_review.errors.full_messages },
+        status: :unprocessable_entity
+    end
+
+  end
+
+  def edit
+    binding.pry
+    picks = Pick.user_picks(current_user.id, @league.id, @current_week.id)
+    @leauge = params[:leagueId]
+
+
   end
 
   def game_details
@@ -36,6 +60,17 @@ class Api::V1::PicksController < ApplicationController
     }
   end
 
+  def available_confidence_scores
+    counter = game_details.length
+    score = 16
+    available_scores =[]
+      counter.times do
+        available_scores << score
+        score -= 1
+      end
+    available_scores
+  end
+
   def user_picks
    Pick.where('user_id = ? AND league_id =? and week_id = ?', current_user.id, @league_id, @week_id)
   end
@@ -50,7 +85,9 @@ class Api::V1::PicksController < ApplicationController
     {
       gameId:pick.game_id,
       winningTeamId:pick.winning_team,
-      confidenceScore: pick.confidence
+      confidenceScore: pick.confidence,
+      weekId:pick.week_id,
+      user_id: pick.user_id
     }
   end
 

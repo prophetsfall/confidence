@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import GameTile from '../components/GameTile'
 
-class PicksFormContainer extends Component {
+class EditPicksFormContainer extends Component {
   constructor(props) {
     super(props);
     this.state={
       leagueID:0,
+      pickID: 0,
       games: [],
-      availableConfidenceScores: [],
+      availableConfidenceScores: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],
       picks:[]
     }
     this.handleSelectWinner = this.handleSelectWinner.bind(this)
@@ -17,9 +18,10 @@ class PicksFormContainer extends Component {
   }
 
   componentDidMount() {
-    let leagueID = this.props.params.id;
+    let leagueID = this.props.params.id[0];
+    let pickID = this.props.params.id[1]
     fetch(`/api/v1/picks`, {credentials: 'same-origin'})
-    .then(response => {
+    .then(response => {debugger 
       if (response.ok) {
         return response;
       } else {
@@ -32,6 +34,7 @@ class PicksFormContainer extends Component {
     .then(body => {
       this.setState({
         leagueID: leagueID,
+        pickID: pickID,
         games: body.games,
         availableConfidenceScores:body.availableScores
       })
@@ -51,7 +54,7 @@ class PicksFormContainer extends Component {
   submitPicks(formPayload) {
     fetch('/api/v1/picks', {
         credentials: 'same-origin',
-        method: 'post',
+        method: 'patch',
         body: JSON.stringify(formPayload),
         headers: {
           'Content-Type': 'application/json',
@@ -128,11 +131,12 @@ class PicksFormContainer extends Component {
     return(
       <form onSubmit={this.formSubmission}>
         <div className="PicksFormContainer">
+          hi from picks container
           {games}
-          <input type="submit" value="Submit" className="submitButton" />
+          <input type="submit" value="Submit" />
         </div>
       </form>
     )
   }
 }
-export default PicksFormContainer
+export default EditPicksFormContainer

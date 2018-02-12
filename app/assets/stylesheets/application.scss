@@ -16,10 +16,26 @@
 
  */
 
+ .welcomeHeader {
+   border-style: solid;
+   border-width: 2px;
+   border-color: black;
+   text-align: center;
+   background-color: green;
+   margin-bottom: 0px;
+ }
+
 .logInSignUp {
   border-style: groove;
   border-width: 1px;
   width: 20em
+}
+
+.leagueLinks {
+  border-style: double;
+  color: black;
+  font-weight: bold;
+  margin-top: 0px;
 }
 
 .matchups {
@@ -54,4 +70,42 @@
 .homeTeamwinner {
   margin-top: 2px;
   background-color: green;
+}
+
+.leagueLink {
+  width: 50%;
+  margin: auto;
+  border-style: solid;
+  border-width: 1px;
+  padding: 2px;
+}
+
+.memberList {
+  font-weight: bold;
+}
+
+.gameHead{
+  text-align: center;
+}
+
+.leagueGameList {
+  width: 50%;
+  margin: auto;
+}
+h3 {
+  text-align: center;
+}
+.userPicks {
+  border-style: solid;
+  border-color: black;
+  border-width: thick;
+}
+
+.gamePick {
+  margin-top: 1px;
+  border-style: solid;
+}
+
+.submitButton {
+  font-size: 24px;
 }
