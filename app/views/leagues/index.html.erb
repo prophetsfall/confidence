@@ -1,4 +1,8 @@
-<h1>Leagues Home Page</h1>
+<h2 class="welcomeHeader">Leagues Home Page</h2>
+<div class="grid-container">
+  <div class="grid-x grid-margin-x">
 <% @open_leagues.each do |league| %>
-<p><%= link_to league.league_name, league_path(league) %></p>
+<div class="cell small-4"><%= link_to league.league_name, league_path(league) %></div>
 <% end %>
+</div>
+</div>

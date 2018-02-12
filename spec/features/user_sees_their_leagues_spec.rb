@@ -10,6 +10,8 @@ feature "as an authenticated user I want to see a list links to my leagues
   let!(:mem1) {Membership.create!(user:user1,league:league1)}
   let!(:mem2) {Membership.create!(user:user1,league:league2)}
   let!(:mem3) {Membership.create!(user:user2,league:league3)}
+  let!(:week1) {Week.create!(week_number:21, year:2018, start_date:Date.new(2017,12,27), end_date:Date.new(2999,4,1))}
+
   scenario "" do
     visit "/"
     click_link "Registered users click here to sign in!"

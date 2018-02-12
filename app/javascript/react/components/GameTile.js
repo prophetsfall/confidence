@@ -42,7 +42,6 @@ class GameTile extends Component {
 
 
   render(){
-
     let currentSelection= this.state.score
 
     let gameDisplay;
