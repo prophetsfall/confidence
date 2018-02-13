@@ -1,15 +1,18 @@
 class Api::V1::PicksController < ApplicationController
+  before_action :authenticate_user!
 
   def index
-    render json: { games:game_details, availableScores: available_confidence_scores}
+    @week_id = Week.current_week.id
+    @league_id = params[:league_id]
+    picks = Pick.user_picks(current_user.id, @league_id, @week_id)
+    render json: { games:game_details, availableScores: available_confidence_scores,picks:picks}
   end
 
   def create
-    @league_id = params[:leagueID]
+    @league_id = params[:league_id]
     @week_id = Week.current_week.id
     pick_params = params[:picks]
     picks = []
-
     pick_params.each do |pick|
       picks <<  Pick.new(
         user_id:current_user.id,
@@ -31,13 +34,6 @@ class Api::V1::PicksController < ApplicationController
 
   end
 
-  def edit
-    binding.pry
-    picks = Pick.user_picks(current_user.id, @league.id, @current_week.id)
-    @leauge = params[:leagueId]
-
-
-  end
 
   def game_details
     all_games =  Week.current_week.games
@@ -71,23 +67,21 @@ class Api::V1::PicksController < ApplicationController
     available_scores
   end
 
-  def user_picks
-   Pick.where('user_id = ? AND league_id =? and week_id = ?', current_user.id, @league_id, @week_id)
-  end
 
   def pick_details
-    user_picks.map do |pick|
+    users_picks = Pick.user_picks(current_user.id, @league_id, @week_id)
+    users_picks.map do |pick|
       pick_hash(pick)
     end
   end
 
   def pick_hash(pick)
     {
-      gameId:pick.game_id,
-      winningTeamId:pick.winning_team,
-      confidenceScore: pick.confidence,
-      weekId:pick.week_id,
-      user_id: pick.user_id
+      gameId:pick[:game_id],
+      winningTeamId:pick[:winning_team],
+      confidenceScore: pick[:confidence],
+      weekId:pick[:week_id],
+      user_id: pick[:user_id]
     }
   end
 

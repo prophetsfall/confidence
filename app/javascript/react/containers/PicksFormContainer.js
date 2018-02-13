@@ -18,7 +18,7 @@ class PicksFormContainer extends Component {
 
   componentDidMount() {
     let leagueID = this.props.params.id;
-    fetch(`/api/v1/picks`, {credentials: 'same-origin'})
+    fetch(`/api/v1/leagues/${leagueID}/picks`, {credentials: 'same-origin'})
     .then(response => {
       if (response.ok) {
         return response;
@@ -30,6 +30,7 @@ class PicksFormContainer extends Component {
     })
     .then(response => response.json())
     .then(body => {
+      debugger
       this.setState({
         leagueID: leagueID,
         games: body.games,
@@ -49,7 +50,8 @@ class PicksFormContainer extends Component {
   }
 
   submitPicks(formPayload) {
-    fetch('/api/v1/picks', {
+    let leagueID = this.state.leagueID
+    fetch(`/api/v1/leagues/${leagueID}/picks`, {
         credentials: 'same-origin',
         method: 'post',
         body: JSON.stringify(formPayload),

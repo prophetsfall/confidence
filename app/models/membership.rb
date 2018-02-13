@@ -15,12 +15,12 @@ class Membership < ApplicationRecord
     score = 0
     picks = Pick.user_picks(user, league, week)
     picks.each do |pick|
-      game = Game.find(pick.game_id)
+      game = Game.find(pick[:game_id])
       if game.winner_id
-        if pick.winning_team == game.winner_id
-          score += pick.confidence
+        if pick[:winning_team] == game.winner_id
+          score += pick[:confidence]
         else
-          score -= pick.confidence
+          score -= pick[:confidence]
         end
       end
     end
