@@ -20,10 +20,10 @@
     <% if @picks.length ==0  %>
       <h2 class="gameHead">Games for Week <%= @current_week.week_number %></h2>
       <div class="leagueGameList">
-        <ul>
+        <ul class="leagueGame">
           <% @games.each do |game| %>
-          <li>
-            <span class="matchup">
+          <li class="matchup">
+            <span >
               <%= game.away_team.location %> <%=game.away_team.team_name%>
               at
               <%= game.home_team.location %> <%= game.home_team.team_name %>
@@ -33,7 +33,7 @@
         </ul>
       </div>
     <% else %>
-  <h2 class="leagueGameList">Your picks for the week </h2>
+  <h2 class="gameHead">Your picks for the week </h2>
   <div class="userPicks">
     <% @picks.each do |pick| %>
     <p class="gamePick">
