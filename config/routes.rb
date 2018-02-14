@@ -4,9 +4,9 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      # resources :leagues,only: :index do
-        resources :picks
-      # end
+      resources :leagues, only: [] do
+        resources :picks, only: [:index, :create]
+      end
     end
   end
 
@@ -18,9 +18,6 @@ Rails.application.routes.draw do
     resources :picks, only: [:index, :edit,:update]
 
   end
-
-
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   get'*path', to: 'users#index'
 end

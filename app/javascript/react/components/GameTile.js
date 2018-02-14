@@ -4,29 +4,37 @@ class GameTile extends Component {
   constructor(props) {
     super(props);
     this.state={
-      score:0,
-      winner:0
+      score:this.props.confidenceScore,
+      pickId: this.props.pickId,
+      winner:this.props.selectedWinner,
+      gameId:this.props.gameId
     }
     this.handleWinner = this.handleWinner.bind(this)
     this.handleChange = this.handleChange.bind(this)
   }
 
   handleWinner(event){
-    // this.props.handleSelectWinner(event,this.props.gameId)
     let winner = parseInt(event.target.id)
-    let confidence
     let gameId = this.props.gameId
-    console.log(this.state.winner)
-    if (this.state.score != 0) {
-      confidence = this.state.score
+    let pickId;
+    if (this.state.pickId !=0) {
+      pickId = this.state.pickId
     }
-    this.props.handleSelectWinner(winner,confidence,gameId )
+    let confidenceScore;
+    if (this.state.score != 0) {
+      confidenceScore = this.state.score
+    }
+    this.props.handleSelectWinner(winner,confidenceScore,gameId,pickId)
     this.setState({winner:winner})
   }
 
   handleChange(event){
     let originalScore;
     let winningTeam;
+    let pickId;
+    if (this.state.pcikId !=0) {
+      pickId = this.state.pickId
+    }
     let score = parseInt(event.target.value);
     let gameId = this.props.gameId
     if (this.state.score != 0) {
@@ -35,14 +43,36 @@ class GameTile extends Component {
     if (this.state.winner !=0) {
       winningTeam = this.state.winner
     }
-    this.props.handleConfidenceAssignment(score, originalScore, gameId, winningTeam)
+    this.props.handleConfidenceAssignment(score, originalScore, gameId, winningTeam,pickId)
     this.setState({score:score})
   }
 
 
 
   render(){
-    let currentSelection= this.state.score
+    let currentSelection;
+    let zeroValue;
+    if (this.state.score != 0) {
+     currentSelection=
+      <option
+        className="dropDownOption"
+        value ={this.state.score}>
+        {this.state.score}
+      </option>
+      zeroValue =
+      <option
+        className="dropDownOption"
+        value ={0}>
+        0
+      </option>
+    } else {
+      currentSelection = <option
+        className="dropDownOption"
+        value ={this.state.score}>
+        {this.state.score}
+      </option>
+    }
+
 
     let gameDisplay;
     if (this.state.winner != 0) {
@@ -103,32 +133,32 @@ class GameTile extends Component {
         }
 
 
-        let scoreList = this.props.availableConfidenceScores.map((score) => {
-          return (
-            <option
-              key={`${this.props.gameId}-${score}`}
-              className="dropDownOption"value={score}>{score}
-            </option>)
-          })
-          return(
-            <div>
-              <form className="gameForm">
-                <div className="gameTile">
-                  {gameDisplay}
-                  <span>Confidence Score</span>
-                  <select value={this.state.value} onChange={this.handleChange}>
-                    <option
-                      className="dropDownOption"
-                      value ={currentSelection}>
-                      {currentSelection}
-                    </option>
-                    {scoreList}
-                  </select>
-                </div>
-              </form>
-            </div>
-          )}
-        }
+    let scoreList;
+    let availableScores = this.props.availableConfidenceScores
+      scoreList = this.props.availableConfidenceScores.map((score) => {
+        return (
+          <option
+            key={`${this.props.gameId}-${score}`}
+            className="dropDownOption"value={score}>{score}
+          </option>)
+      })
+
+  return(
+    <div>
+      <form className="gameForm">
+        <div className="gameTile">
+          {gameDisplay}
+          <span>Confidence Score</span>
+          <select value={this.state.value} onChange={this.handleChange}>
+            {currentSelection}
+            {zeroValue}
+            {scoreList}
+          </select>
+        </div>
+      </form>
+    </div>
+  )}
+}
 
 
-        export default GameTile
+export default GameTile

@@ -1,50 +1,50 @@
 <h2 class="welcomeHeader">League Homepage for <%= @league.league_name %></h1>
-<div class="memberList">
-  League Standings:
-  <ol>
-  <% @scores.each do |score|%>
-  <li>
-    <%=score[:username]%> | Season Score:
-    <%=score[:score_season]%>
-  </li>
-<% end %>
-</ol>
-</div>
+  <div class="memberList">
+    League Standings:
+    <ol>
+      <% @scores.each do |score|%>
+      <li>
+        <%=score[:username]%> | Season Score:
+        <%=score[:score_season]%>
+      </li>
+      <% end %>
+    </ol>
+  </div>
 
-<% if !@members.find_by_id(current_user.id) %>
-<%= link_to "Join this league", league_memberships_path(@league), method: :post  %>
-<% end %>
-<% if @games %>
-  <% if @picks.length ==0  %>
-  <h2 class="gameHead">Games for Week <%= @current_week.week_number %></h2>
-    <div class="leagueGameList">
-      <ul>
-        <% @games.each do |game| %>
-          <li>
-            <span class="matchup">
+  <% if !@members.find_by_id(current_user.id) %>
+    <%= link_to "Join this league", league_memberships_path(@league), method: :post  %>
+  <% else %>
+    <h3> <%= link_to "Click here to pick the games!",league_picks_path(@league.id) %> </h3>
+  <% end %>
+  <% if @games %>
+    <% if @picks.length ==0  %>
+      <h2 class="gameHead">Games for Week <%= @current_week.week_number %></h2>
+      <div class="leagueGameList">
+        <ul class="leagueGame">
+          <% @games.each do |game| %>
+          <li class="matchup">
+            <span >
               <%= game.away_team.location %> <%=game.away_team.team_name%>
               at
               <%= game.home_team.location %> <%= game.home_team.team_name %>
             </span>
           </li>
-        <% end %>
-      </ul>
-    </div>
-    <h3> <%= link_to "Click here to pick the games!",league_picks_path(@league.id) %> </h3>
-  <% else %>
-    <h2 class="leagueGameList">Your picks for the week </h2>
-    <div class="userPicks">
-      <% @picks.sort %>
-    <% @picks.each do |pick| %>
-      <p class="gamePick">
-        <%=Team.find_by_id(pick.winning_team).location%>
-        <%=Team.find_by_id(pick.winning_team).team_name%>
-        <%=pick.confidence%>
-      </p>
-      <% end %>
+          <% end %>
+        </ul>
       </div>
-    <%= link_to "Edit your picks here", edit_league_pick_path(@league.id) %>
+    <% else %>
+  <h2 class="gameHead">Your picks for the week </h2>
+  <div class="userPicks">
+    <% @picks.each do |pick| %>
+    <p class="gamePick">
+      <%=Team.find_by_id(pick[:winning_team]).location%>
+      <%=Team.find_by_id(pick[:winning_team]).team_name%>
+      <%=pick[:confidence]%>
+    </p>
+    <% end %>
+  </div>
+  <%= link_to "Edit your picks here",  league_picks_path(@league.id) %>
   <% end %>
-<% else %>
-<p> No Games Scheduled </p>
-<% end %>
+  <% else %>
+  <p> No Games Scheduled </p>
+  <% end %>

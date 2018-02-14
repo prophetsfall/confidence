@@ -1,17 +1,16 @@
 <% if current_user %>
 <h2 class="welcomeHeader">Welcome <%=current_user.first_name%></h2>
 <div class="leagueLinks">
-  <div> <%= link_to "Click here to see available leagues!", leagues_path  %> </div>
-  <div> <%= link_to "Click here to create a custom league!", new_league_path  %> </div>
+  <span class="publicLink"> <%= link_to "Click here to see available leagues!", leagues_path  %> </span>
+  <span class="privateLink"> <%= link_to "Click here to create a custom league!", new_league_path  %> </span>
 </div>
     <% @memberships.each do |membership| %>
-    <p class="leagueLink">
-      <%=link_to "#{ membership.league.league_name}", league_path(membership.league)%>
-      <%="Score for week #{Week.current_week.week_number}: "%>
-      <%= Membership.weekly_score(membership.user_id, membership.league_id,Week.current_week) %>
-      :::
-      <%= "Score for #{Week.current_week.year}: #{membership.score}" %>
-    </p>
+    <div class="columns small-3 leagueLink">
+    <span class="columns small-6"> <%=link_to "#{ membership.league.league_name}", league_path(membership.league)%></span>
+      <span class="columns small-3 weeklyScore"><%="Score for week #{Week.current_week.week_number}: "%>
+      <%= Membership.weekly_score(membership.user_id, membership.league_id,Week.current_week) %></span>
+       <span class="columns small-3 yearToDateScore"><%= "Score for #{Week.current_week.year}: #{membership.score}" %></span>
+    </div>
     <%  end   %>
 <% else %>
   <h2 class ="welcomeHeader"> Welcome to NFL Confidence Pool! </h2>
