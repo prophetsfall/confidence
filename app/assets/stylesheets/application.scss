@@ -19,8 +19,24 @@ a {
   font-size: 24px;
 
 }
+
+h1 {
+  font-size: 24px;
+  color: #FFFFFF;
+  display: block;
+}
+
 .top_bar {
+  color: white;
   margin-bottom: 0px;
+}
+.ul {
+ font-size: 24px;
+}
+
+.welcome {
+  font-size: 24px;
+  color: #FFFFFF;
 }
 
  .welcomeHeader {
@@ -39,13 +55,6 @@ a {
   border-width: 1px;
   width: 20em
 }
-
-
-.matchups {
-  border-style: solid;
-  border-width: 1px;
-}
-
 
 .gameTile {
   text-align: center;
@@ -76,94 +85,26 @@ a {
   background-color: green;
 }
 
-.leagueLinks {
-  width: 50%;
-  margin: auto;
-  margin-top: 0px;
-  margin-bottom: 2px;
-  border-style: double;
-  border-width:thick;
-  color: black;
-  font-weight: bold;
-  font-size: 20px;
-}
-
-.leagueLink {
-  width: 50%;
-  margin: auto;
-  border-style: solid;
-  border-width: 1px;
-  padding: 2px;
-  text-align: left;
-  font-size: 16px;
-}
-.leagueJoin {
-  border-style: solid;
-  border-width: 1px;
-  padding: 2px;
-  text-align: left;
-  font-size: 16px;
-}
-
-.memberList {
-  font-weight: bold;
-}
-
-.gameHead{
-  text-align: center;
-}
-
-.leagueGameList {
-  width: 75%;
-  margin: auto;
-
-}
-.leagueGame {
-  width: 100%;
-  margin: auto;
-  list-style-type: none;
-  border-style: double;
-}
-.matchup {
-  font-size: 18px;
-  border-style: ridge;
-  width: 100%;
-}
 h3 {
   text-align: center;
 }
-.userPicks {
-  width: 75%;
-  margin: auto;
-  border-style: solid;
-  border-color: black;
-  border-width: thick;
-}
 
-.gamePick {
-  margin-top: 1px;
-  border-style: solid;
-  height: 10em
+
+.game {
+    align-content: center;
+    margin: 2px;
+    border-style: solid;
+    height: 15em;
+    width:  15em;
+}
+.gameTeam {
+  height: 40%;
+  width: 80%;
+  font-size: 60em;
+  text-align: center;
+
 }
 
 .submitButton {
   font-size: 24px;
-}
-
-.publicLink {
-  padding-right: 10px;
-}
-
-.privateLink {
-  padding-left: 10px;
-  text-align: right;
-}
-.weeklyScore {
-  font-style: italic;
-  font-size: 18px;
-}
-
-.yearToDateScore {
-  font-weight: bold;
-  font-size: 18px;
 }

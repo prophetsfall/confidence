@@ -18,13 +18,19 @@
     <% if @picks.length ==0  %>
     <h3> <%= link_to "Click here to pick the games!",league_picks_path(@league.id) %> </h3>
       <h2 class="gameHead">Games for Week <%= @current_week.week_number %></h2>
-      <div class=" row leagueGameList">
+      <div class="row">
           <% @games.each do |game| %>
           <% away =Team.find_by_id(game.away_team_id).team_name  %>
           <% home =Team.find_by_id(game.home_team_id).team_name  %>
-            <div class="small-6 medium-4 large-3 columns" id=<%="#{away}" %>>@</div>
-            <div class="small-6 medium-4 large-3 columns" id=<%="#{home}"%>></div>
-
+          <% if away == "49ers" %>
+          <% away = "Niners" %>
+          <% end %>
+          <% if home == "49ers" %>
+          <% home = "Niners" %>
+          <% end %>
+            <div class="small-6 medium-4 large-3 columns game end">
+              <div class="gameTeam" id=<%="#{away}"%>></div> AT <div class="gameTeam" id=<%="#{home}"%>></div>
+            </div>
           <% end %>
       </div>
 

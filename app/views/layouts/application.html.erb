@@ -19,6 +19,14 @@
     </ul>
 
     <section class="top-bar-section">
+      <ul class="title-area left">
+        <% if current_user %>
+        <li><h1>Welcome <%= current_user.first_name %><h1> </li>
+        <% end %>
+      </ul>
+    </section>
+
+    <section class="top-bar-section">
       <ul class="right">
         <%- if current_user -%>
           <li><%= link_to 'Sign Out', destroy_user_session_path, method: :delete %></li>
