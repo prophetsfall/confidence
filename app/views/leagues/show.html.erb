@@ -34,6 +34,9 @@
     <div class="row">
     <% @picks.each do |pick| %>
     <% name =Team.find_by_id(pick[:winning_team]).team_name%>
+    <% if name == "49ers" %>
+    <% name = "Niners" %>
+    <% end %>
     <div class="small-6 medium-4 large-3 columns gamePick" id=<%="#{name}"%>>
       <%=Team.find_by_id(pick[:winning_team]).location%>
       <%=Team.find_by_id(pick[:winning_team]).team_name%>

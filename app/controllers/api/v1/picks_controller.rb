@@ -29,7 +29,7 @@ class Api::V1::PicksController < ApplicationController
           game_id:pick[:game_id],
           week_id:@week_id ,
           winning_team:pick[:winning_team],
-          confidence:pick[:confidenceScore]
+          confidence:pick[:confidence]
         )
       end
     end
