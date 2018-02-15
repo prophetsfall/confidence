@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
   validates :username, presence: true
 
-  has_many :memberships
-  has_many :picks
+  has_many :memberships, dependent: :destroy
+  has_many :picks, dependent: :destroy
   has_many :leagues, through: :memberships
 end

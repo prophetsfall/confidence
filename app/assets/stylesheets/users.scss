@@ -1,0 +1,42 @@
+.leagueLinks {
+  width: 50%;
+  margin: auto;
+  margin-top: 0px;
+  margin-bottom: 5px;
+  border-style: double;
+  border-width:thick;
+  color: black;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.leagueLink {
+  width: 50%;
+  margin: auto;
+  border-style: solid;
+  border-width: 1px;
+  padding: 2px;
+  text-align: left;
+  font-size: 16px;
+}
+
+.publicLink {
+  padding-right: 10px;
+}
+
+.privateLink {
+  padding-left: 10px;
+  text-align: right;
+}
+
+
+
+.weeklyScore {
+  font-style: italic;
+  font-size: 18px;
+}
+
+.yearToDateScore {
+  font-weight: bold;
+  font-size: 18px;
+}
