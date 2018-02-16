@@ -58,11 +58,8 @@ h1 {
 
 .gameTile {
   text-align: center;
-  border-style:  solid ;
+  border-style: solid ;
   border-color: black;
-  width: 50%;
-  margin-left:  auto;
-  margin-right: auto;
   margin-top: 10px;
 
 }
@@ -77,12 +74,14 @@ h1 {
 
 .awayTeamwinner {
     margin-bottom: 2px;
-  background-color: cyan;
+    background-color: #FF110D;
+    font-weight: bold;
 }
 
 .homeTeamwinner {
   margin-top: 2px;
-  background-color: green;
+  background-color: #33D40B;
+  font-weight: bold;
 }
 
 h3 {
@@ -96,15 +95,21 @@ h3 {
     border-style: solid;
     height: 15em;
     width:  15em;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
+
 .gameTeam {
-  height: 40%;
+  height: 50%;
   width: 80%;
   font-size: 60em;
-  text-align: center;
+
 
 }
 
 .submitButton {
+  display: block;
+  margin: 10px auto;
   font-size: 24px;
+
 }

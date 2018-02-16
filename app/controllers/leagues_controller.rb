@@ -22,6 +22,7 @@ class LeaguesController < ApplicationController
       @members = @league.users
       if @league.public_league? || @members.find_by_id(current_user.id)
         League.league_scores(@league.id)
+        @scores.sort_by! {|score| score[:score]}.reverse
         render :show
       else
         redirect_to leagues_path

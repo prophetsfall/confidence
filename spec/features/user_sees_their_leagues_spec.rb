@@ -14,7 +14,7 @@ feature "as an authenticated user I want to see a list links to my leagues
 
   scenario "" do
     visit "/"
-    click_link "Registered users click here to sign in!"
+    click_link "Sign In"
     fill_in "Email", with: user1.email
     fill_in "Password", with: user1.password
     click_button "Log in"

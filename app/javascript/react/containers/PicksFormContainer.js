@@ -191,12 +191,14 @@ class PicksFormContainer extends Component {
 
 
     return(
-      <form onSubmit={this.formSubmission}>
-        <div className="PicksFormContainer">
+      <div className="row">
+      <form className="small-12 columns" onSubmit={this.formSubmission}>
+        <div className="small-12 columns pickForm">
           {games}
-          <input type="submit" value="Submit" className="submitButton" />
         </div>
+        <input type="submit" value="Submit" className="submitButton" />
       </form>
+    </div>
     )
   }
 }
