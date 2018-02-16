@@ -4,7 +4,7 @@ feature "as an authenticated user I be able to create a league " do
   before(:all) do
   Rails.application.load_seed
   end
-  
+
   let!(:user1) {FactoryBot.create(:user)}
   let!(:user2) {FactoryBot.create(:user)}
   let!(:league1) {FactoryBot.create(:league)}
@@ -21,7 +21,7 @@ feature "as an authenticated user I be able to create a league " do
 
   scenario "User creates a public league" do
     visit "/"
-    click_link "Registered users click here to sign in!"
+    click_link "Sign In"
     fill_in "Email", with: user1.email
     fill_in "Password", with: user1.password
     click_button "Log in"
@@ -39,7 +39,7 @@ feature "as an authenticated user I be able to create a league " do
   end
   scenario "User creates a public league" do
     visit "/"
-    click_link "Registered users click here to sign in!"
+    click_link "Sign In"
     fill_in "Email", with: user1.email
     fill_in "Password", with: user1.password
     click_button "Log in"
