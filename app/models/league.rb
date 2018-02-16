@@ -25,4 +25,8 @@ class League < ApplicationRecord
     scores = scores.sort_by { |k| k[:score_season]}.reverse
   end
 
+  def self.current_league(league_id)
+
+  end
+
 end

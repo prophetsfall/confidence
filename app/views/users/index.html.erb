@@ -1,9 +1,5 @@
 <% if current_user %>
 <h2 class="welcomeHeader">Welcome <%=current_user.first_name%></h2>
-<div class="leagueLinks">
-  <span class="publicLink"> <%= link_to "Click here to see available leagues!", leagues_path  %> </span>
-  <span class="privateLink"> <%= link_to "Click here to create a custom league!", new_league_path  %> </span>
-</div>
     <% @memberships.each do |membership| %>
     <div class="row small-6 small-offset-3 medium-8 medium-offset-2 large-10 columns large-offset-2 leagueLink">
     <span class="columns small-6 medium-6 large-6"> <%=link_to "#{ membership.league.league_name}", league_path(membership.league)%></span>
@@ -11,16 +7,22 @@
       <%= Membership.weekly_score(membership.user_id, membership.league_id,Week.current_week) %></span>
        <span class="columns small-3 yearToDateScore"><%= "Score for #{Week.current_week.year}: #{membership.score}" %></span>
     </div>
-    <%  end   %>
+    <% end %>
+    <div class="row">
+      <div class="leagueLinks small-6 small-offset-3 medium-8 medium-offset-2 large-10 columns large-offset-2 ">
+        <div class="publicLink"><%= link_to "Click here to see available leagues!", leagues_path%></div>
+        <div class="privateLink"><%= link_to "Click here to create a custom league!", new_league_path%></div>
+      </div>
+    </div>
 <% else %>
   <h2 class ="welcomeHeader"> Welcome to NFL Confidence Pool! </h2>
-  <p>
-    This is an app built to allow you to pick the NFL games each weekend.
-    Gonna be a short blurb about rules of the game!
+  <div class="row">
+  <p class = "small-8 small-offset-2 large-10  columns introBlub">
+    Each week you pick the winners of all games on the NFL schedule.<br> You'll then assign a confidence score to each game.<br>
+    Pick the winner correctly, gain that many points.<br> Otherwise you lose that many points.
+    <br><br>
+    Register and join or create a league to get started!
   </p>
-  <div class="logInSignUp">
-    <span id="signIn"><%= link_to "Registered users click here to sign in!", user_session_path %></span>
-    <br>
-    <span id="signUp"><%= link_to "Sign up here to continue!" ,new_user_registration_path %></span>
-  </div>
+</div>
+
 <% end %>

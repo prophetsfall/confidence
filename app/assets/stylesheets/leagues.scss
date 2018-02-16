@@ -6,7 +6,7 @@
   font-size: 16px;
 }
 
-.memberList {
+.leaderBoard {
   font-weight: bold;
 }
 
@@ -14,7 +14,6 @@
 .gameHead{
   text-align: center;
 }
-
 
 
 .leagueGameList {
@@ -32,5 +31,12 @@
 .gamePick {
   margin-top: 1px;
   border-style: solid;
-  height: 10em
+  height: 10em;
+
+}
+
+.gamePick span {
+  position: absolute;
+  bottom: 0;
+  text-align: center;
 }
