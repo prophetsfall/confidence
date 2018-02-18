@@ -643,7 +643,7 @@ $include-html-global-classes: $include-html-classes;
 // $form-label-font-size: rem-calc(14);
 // $form-label-font-weight: $font-weight-normal;
 // $form-label-line-height: 1.5;
-// $form-label-font-color: scale-color($black, $lightness: 30%);
+$form-label-font-color: black;
 // $form-label-small-transform: capitalize;
 // $form-label-bottom-margin: 0;
 // $input-font-family: inherit;
@@ -1306,7 +1306,7 @@ $table-border-color: #396F2A;
 // These control the table head styles
 $table-head-bg: black;
 // $table-head-font-size: rem-calc(14);
-$table-head-font-color: #396F2A;
+$table-head-font-color: #1ec503;;
 // $table-head-font-weight: $font-weight-bold;
 // $table-head-padding: rem-calc(8 10 10);
 
@@ -1326,7 +1326,7 @@ $table-head-font-color: #396F2A;
 // These control the row padding and font styles
 // $table-row-padding: rem-calc(9 10);
 // $table-row-font-size: rem-calc(14);
-$table-row-font-color: #396F2A;
+$table-row-font-color: #1ec503;;
 // $table-line-height: rem-calc(18);
 
 // These are for controlling the layout, display and margin of tables
@@ -1403,7 +1403,7 @@ $table-row-font-color: #396F2A;
 // $include-html-top-bar-classes: $include-html-classes;
 
 // Background color for the top bar
-// $topbar-bg-color: $oil;
+$topbar-bg-color: #486D30;
 // $topbar-bg: $topbar-bg-color;
 
 // Height and margin

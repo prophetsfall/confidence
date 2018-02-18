@@ -1,6 +1,7 @@
 .leagueLinks {
   width: 50%;
-  margin: auto;
+  display: block;
+  align-self: center;
   margin-top: 0px;
   margin-bottom: 5px;
   border-style: double;
@@ -8,6 +9,13 @@
   color: black;
   font-weight: bold;
   font-size: 20px;
+  background-color: #486D30;
+  opacity: .7;
+}
+.leagueLinks a{
+  color:black;
+  font-weight:bold;
+
 }
 
 .leagueLink {
@@ -35,3 +43,5 @@
   font-size: 1.5em;
   font-weight: bold;
 }
+
+tfoot{ display: table-footer-group;}

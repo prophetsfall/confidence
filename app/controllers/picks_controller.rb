@@ -4,7 +4,10 @@ class PicksController < ApplicationController
     @current_week = Week.current_week
     @games = @current_week.games
     @picks = Pick.user_picks(current_user.id, @league.id, @current_week.id)
-
+    if Membership.where('league_id =? and user_id =?',@league.id ,current_user.id).length == 0
+      redirect_to league_path(@league)
+      flash[:notice]="You are not a member of this league"
+    end
   end
 
   def edit;end

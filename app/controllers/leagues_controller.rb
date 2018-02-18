@@ -18,6 +18,7 @@ class LeaguesController < ApplicationController
     @games = @current_week.games
     @picks = Pick.user_picks(current_user.id, @league.id, @current_week.id)
     @scores = League.league_scores(@league.id)
+
     if @league
       @members = @league.users
       if @league.public_league? || @members.find_by_id(current_user.id)
@@ -38,15 +39,20 @@ class LeaguesController < ApplicationController
   end
 
   def create
-    @league = League.new(league_params)
-    @user = current_user
-    @membership = Membership.new(league:@league, user:@user, commissioner: true)
-    if @league.save && @membership.save
-      flash[:notice] = "League Created Successfully!"
-      redirect_to league_path(@league)
+    if League.valid_name?(league_params[:league_name]) == true
+      @league = League.new(league_params)
+      @user = current_user
+      @membership = Membership.new(league:@league, user:@user, commissioner: true)
+      if @league.save && @membership.save
+        flash[:notice] = "League Created Successfully!"
+        redirect_to league_path(@league)
+      else
+        flash[:notice] = "League not created"
+        render :new
+      end
     else
-      flash[:notice] = "League not created"
-      render :new
+      redirect_to new_league_path
+      flash[:notice] = "Leagues can only contain letters, numbers, and spaces."
     end
   end
 

@@ -1,0 +1,38 @@
+.fieldBackground {
+  background: image-url("field.jpg");
+  overflow: hidden;
+  repeat:repeat;
+
+}
+.fieldBackgroundHome {
+  background: image-url("field.jpg");
+  background-size: cover;
+  repeat:repeat;
+  overflow: hidden;
+  height: 100%;
+
+
+}
+
+.fieldLeagueHome {
+  background: image-url("field.jpg");
+  background-size: cover;
+  height: 100%;
+
+}
+.fieldBackgroundForm {
+  background: image-url("field.jpg");
+  background-size: cover;
+  height: 100%;
+
+
+}
+.fieldLeagueHome a{
+  color: black;
+  font-weight: bolder;
+}
+
+.fieldBackgroundShow {
+  background: image-url("field.jpg");
+  background-size: cover;
+}

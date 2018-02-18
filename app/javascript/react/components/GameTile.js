@@ -173,7 +173,7 @@ class GameTile extends Component {
                       <form className="gameForm">
                         <div className="small-6 medium-4 large-3 columns end gameTile">
                           {gameDisplay}
-                          <span>Confidence Score</span>
+                          <span class="conScore">Confidence Score</span>
                           <select value={this.state.value} onChange={this.handleChange}>
                             {currentSelection}
                             {zeroValue}

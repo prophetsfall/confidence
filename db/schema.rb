@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180207165846) do
+ActiveRecord::Schema.define(version: 20180216155841) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,8 +40,9 @@ ActiveRecord::Schema.define(version: 20180207165846) do
   create_table "memberships", force: :cascade do |t|
     t.bigint "league_id"
     t.bigint "user_id"
-    t.integer "score", default: 0
+    t.integer "weekly_score", default: 0
     t.boolean "commissioner", default: false
+    t.integer "season_score", default: 0
     t.index ["league_id", "user_id"], name: "index_memberships_on_league_id_and_user_id", unique: true
     t.index ["league_id"], name: "index_memberships_on_league_id"
     t.index ["user_id"], name: "index_memberships_on_user_id"

@@ -16,17 +16,18 @@ class League < ApplicationRecord
     league = League.find(league_id)
     members = league.memberships
     scores = members.map do |member|
+
       {
         username: member.user.username,
         score_week: Membership.weekly_score(member.user_id,league_id, Week.current_week ),
-        score_season: member.score
+        score_season: Membership.season_score(member.user_id, league_id, Week.current_week.year)
       }
     end
     scores = scores.sort_by { |k| k[:score_season]}.reverse
   end
-
-  def self.current_league(league_id)
-
-  end
+  def self.valid_name?(str)
+  return true if (/^[a-z\d\-_\s]+$/i.match(str))
+  return false
+end
 
 end
