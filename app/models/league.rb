@@ -26,7 +26,7 @@ class League < ApplicationRecord
     scores = scores.sort_by { |k| k[:score_season]}.reverse
   end
   def self.valid_name?(str)
-  return true if (/^\w*$/.match(str))
+  return true if (/^[a-z\d\-_\s]+$/i.match(str))
   return false
 end
 

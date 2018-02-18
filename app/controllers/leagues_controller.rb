@@ -52,7 +52,7 @@ class LeaguesController < ApplicationController
       end
     else
       redirect_to new_league_path
-      flash[:notice] = "Leagues can only contain letters, numbers, and underscores."
+      flash[:notice] = "Leagues can only contain letters, numbers, and spaces."
     end
   end
 

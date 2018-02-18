@@ -32,12 +32,11 @@ feature "as an authenticated user I be able to create a league " do
     choose "public-league-button"
     click_button "Create League"
 
-    expect(page).to have_content "League Created Successfully!"
     expect(page).to have_content "League Homepage for This is a custom league"
     expect(page).to have_content user1.username
     expect(page).to have_no_content user2.username
   end
-  scenario "User creates a public league" do
+  scenario "User creates a private league" do
     visit "/"
     click_link "Sign In"
     fill_in "Email", with: user1.email
@@ -50,7 +49,6 @@ feature "as an authenticated user I be able to create a league " do
     choose "private-league-button"
     click_button "Create League"
 
-    expect(page).to have_content "League Created Successfully!"
     expect(page).to have_content "League Homepage for This is a custom league"
     expect(page).to have_content user1.username
     expect(page).to have_no_content user2.username
