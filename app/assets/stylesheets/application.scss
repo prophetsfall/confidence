@@ -40,49 +40,75 @@ h1 {
 }
 
  .welcomeHeader {
-   border-style: solid;
-   border-width: 2px;
-   border-color: black;
+
    text-align: center;
-   background-color: green;
    margin-top: 0px;
    margin-bottom: 0px;
-   font-weight: bold;
+   font-weight: bolder;
  }
 
 .logInSignUp {
   border-style: groove;
   border-width: 1px;
-  width: 20em
+  width: 20em;
 }
 
 .gameTile {
   text-align: center;
+  font-weight: bold;
   border-style: solid ;
   border-color: black;
   margin-top: 10px;
+  height: 28rem;
+  background-color: #486D30;
+  opacity: .90;
 
 }
 
 .awayTeam {
   margin-bottom: 2px;
+  margin-top: 2px;
+  border-style:ridge;
+  border-width: 3px;
+  font-weight:bolder;
+}
+.awayTeam img {
+  border: hidden;
 }
 
 .homeTeam {
   margin-top: 2px;
+  margin-bottom: 2px;
+  border-style:ridge;
+  border-width: 3px;
+  font-weight: bold;
+
+}
+
+.homeTeam img{
+  border: hidden;
 }
 
 .awayTeamwinner {
     margin-bottom: 2px;
+    margin-top: 2px;
     background-color: #FF110D;
     font-weight: bold;
+    border-style: ridge;
+    border-width: 2px;
+    border-color: black;
 }
 
 .homeTeamwinner {
   margin-top: 2px;
+  margin-bottom: 0px;
   background-color: #33D40B;
   font-weight: bold;
+  border-style: ridge;
+  border-width: 3px;
+  border-color: black;
 }
+
 
 h3 {
   text-align: center;
@@ -97,19 +123,41 @@ h3 {
     width:  15em;
     padding-top: 5px;
     padding-bottom: 5px;
+    background-color: #486D30;
+    opacity: .70;
+    overflow: hidden;
 }
 
 .gameTeam {
   height: 50%;
   width: 80%;
   font-size: 60em;
-
-
 }
 
 .submitButton {
   display: block;
   margin: 10px auto;
   font-size: 24px;
+}
 
+#pickLink a:link {
+  color: white;
+}
+#pickLink a:visited {
+  color: #FFBB00;
+}
+
+.conScore {
+  font-weight: bolder;
+}
+.leagueBoard {
+  color: #1ec503;
+  opacity: .9;
+}
+.leagueBoard a{
+  color: #1ec503;
+}
+.customLeagueHeader {
+  color: black;
+  font-weight: bold;
 }
