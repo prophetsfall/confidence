@@ -58,10 +58,10 @@ if Week.all.length < 17
   Week.create!(week_number:15, year:2017, start_date:Date.new(2017,12,13), end_date:Date.new(2017,12,19))
   Week.create!(week_number:16, year:2017, start_date:Date.new(2017,12,20), end_date:Date.new(2017,12,26))
   Week.create!(week_number:17, year:2017, start_date:Date.new(2017,12,27), end_date:Date.new(2018,1,1))
+  Week.create!(week_number:1, year:2018, start_date:Date.new(2018,1,1), end_date:Date.new(2018,6,30))
 end
 
-if Week.current_week.nil?
-  Week.create!(week_number:1, year:2018, start_date:Date.new(2018,1,1), end_date:Date.new(2018,6,30))
+
   Game.create!(week_id:Week.current_week.id, away_team_id: 1, home_team_id:2)
   Game.create!(week_id:Week.current_week.id, away_team_id: 3, home_team_id:4)
   Game.create!(week_id:Week.current_week.id, away_team_id: 5, home_team_id:6)
@@ -78,4 +78,3 @@ if Week.current_week.nil?
   Game.create!(week_id:Week.current_week.id, away_team_id: 27, home_team_id:28)
   Game.create!(week_id:Week.current_week.id, away_team_id: 29, home_team_id:30)
   Game.create!(week_id:Week.current_week.id, away_team_id: 31, home_team_id:32)
-end
