@@ -57,7 +57,8 @@ class PicksFormContainer extends Component {
   submitPicks(formPayload) {
     let gamesLength = this.state.games.length
     let validateScore = formPayload.picks.filter(pick => pick.confidence >0 )
-    if (formPayload.picks.length === gamesLength && validateScore.length === gamesLength){
+    let validateWinner = formPayload.picks.filter(pick => pick.winning_team > 0 )
+    if (validateWinner.length === gamesLength && validateScore.length === gamesLength){
       let leagueID = this.state.leagueID
       fetch(`/api/v1/leagues/${leagueID}/picks`, {
           credentials: 'same-origin',
@@ -95,7 +96,7 @@ class PicksFormContainer extends Component {
       } else {
         errorScores=''
       }
-      if (formPayload.picks.length < gamesLength) {
+      if (formPayload.picks.length < gamesLength || validateWinner.length < gamesLength ) {
         errorWinners = "You must select a winner for each game!"
       }
       else {
