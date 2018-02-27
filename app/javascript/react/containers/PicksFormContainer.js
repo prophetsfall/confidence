@@ -9,7 +9,8 @@ class PicksFormContainer extends Component {
       games: [],
       availableConfidenceScores: [],
       picks:[],
-      editFlag: false
+      editFlag: false,
+      noGames: false
     }
     this.handleSelectWinner = this.handleSelectWinner.bind(this)
     this.handleConfidenceAssignment = this.handleConfidenceAssignment.bind(this)
@@ -31,16 +32,21 @@ class PicksFormContainer extends Component {
     })
     .then(response => response.json())
     .then(body => {
-      let editFlag = false
-      if( body.picks.length===body.games.length)
-      {editFlag = true}
-        this.setState({
-        leagueID: leagueID,
-        games: body.games,
-        availableConfidenceScores:body.availableScores,
-        picks: body.picks,
-        editFlag: editFlag
+      if (body.games === "none"){
+        this.setState({noGames: true})
+      }
+      else {
+        let editFlag = false
+        if( body.picks.length===body.games.length)
+        {editFlag = true}
+          this.setState({
+          leagueID: leagueID,
+          games: body.games,
+          availableConfidenceScores:body.availableScores,
+          picks: body.picks,
+          editFlag: editFlag
       })
+    }
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
@@ -192,7 +198,7 @@ class PicksFormContainer extends Component {
 
 
     return(
-      <div className="row">
+      <div className="row fieldBackground">
       <form className="small-12 columns" onSubmit={this.formSubmission}>
         <div className="small-12 columns pickForm">
           {games}

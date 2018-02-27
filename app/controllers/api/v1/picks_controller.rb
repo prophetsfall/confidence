@@ -5,10 +5,15 @@ class Api::V1::PicksController < ApplicationController
     @week_id = Week.current_week.id
     @league_id = params[:league_id]
     @picks = Pick.user_picks(current_user.id, @league_id, @week_id)
-    if @picks.length > 0
-      render json: { games:game_details, availableScores: available_confidence_scores(@picks),picks:@picks}
+    @games = game_details
+    if @games.length > 0
+      if @picks.length > 0
+        render json: { games:game_details, availableScores: available_confidence_scores(@picks),picks:@picks}
+      else
+        render json: { games:game_details, availableScores: available_confidence_scores,picks:@picks}
+      end
     else
-      render json: { games:game_details, availableScores: available_confidence_scores,picks:@picks}
+      render json: {games: "none"}
     end
 
   end
@@ -50,9 +55,13 @@ class Api::V1::PicksController < ApplicationController
 
     def game_details
       all_games =  Week.current_week.games
+      games = []
       all_games.map do |game|
-        game_hash(game)
+        if game.gametime > Time.now
+        games << game_hash(game)
       end
+      end
+      games
     end
 
     def game_hash(game)
@@ -64,7 +73,8 @@ class Api::V1::PicksController < ApplicationController
         away_team_location: game.away_team.location,
         away_team_name: game.away_team.team_name,
         away_team_id: game.away_team.id,
-        winner_id: nil
+        winner_id: nil,
+        gametime: game.gametime
 
       }
     end
