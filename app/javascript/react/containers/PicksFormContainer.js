@@ -9,7 +9,8 @@ class PicksFormContainer extends Component {
       games: [],
       availableConfidenceScores: [],
       picks:[],
-      editFlag: false
+      editFlag: false,
+      noGames: false
     }
     this.handleSelectWinner = this.handleSelectWinner.bind(this)
     this.handleConfidenceAssignment = this.handleConfidenceAssignment.bind(this)
@@ -31,16 +32,21 @@ class PicksFormContainer extends Component {
     })
     .then(response => response.json())
     .then(body => {
-      let editFlag = false
-      if( body.picks.length===body.games.length)
-      {editFlag = true}
-        this.setState({
-        leagueID: leagueID,
-        games: body.games,
-        availableConfidenceScores:body.availableScores,
-        picks: body.picks,
-        editFlag: editFlag
+      if (body.games === "none"){
+        this.setState({noGames: true})
+      }
+      else {
+        let editFlag = false
+        if( body.picks.length===body.games.length)
+        {editFlag = true}
+          this.setState({
+          leagueID: leagueID,
+          games: body.games,
+          availableConfidenceScores:body.availableScores,
+          picks: body.picks,
+          editFlag: editFlag
       })
+    }
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
@@ -145,6 +151,8 @@ class PicksFormContainer extends Component {
         let gamePick = this.state.picks.find((pick) =>
         (pick.game_id === game.id )
       )
+      let dateTime = Date.parse(game.gametime)
+      let gameTime = new Date(dateTime)
       return(
         <GameTile
           key={game.id}
@@ -162,6 +170,7 @@ class PicksFormContainer extends Component {
           selectedWinner={gamePick.winning_team}
           availableConfidenceScores={this.state.availableConfidenceScores}
           handleConfidenceAssignment={this.handleConfidenceAssignment}
+          gametime={gameTime}
         />
 
       )
@@ -185,6 +194,7 @@ class PicksFormContainer extends Component {
           confidenceScore={0}
           availableConfidenceScores={this.state.availableConfidenceScores}
           handleConfidenceAssignment={this.handleConfidenceAssignment}
+          gametime={gameTime}
         />
       )
   })
@@ -193,7 +203,7 @@ class PicksFormContainer extends Component {
 
     return(
       <div className="row">
-      <form className="small-12 columns" onSubmit={this.formSubmission}>
+      <form className="small-12 columns fieldBackgroundForm" onSubmit={this.formSubmission}>
         <div className="small-12 columns pickForm">
           {games}
         </div>

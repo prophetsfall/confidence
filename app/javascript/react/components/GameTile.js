@@ -73,117 +73,70 @@ class GameTile extends Component {
       </option>
     }
 
-
-    let gameDisplay;
+    let away = "awayTeam"
+    let home = "homeTeam"
     if (this.state.winner != 0) {
       if (this.state.winner === this.props.awayTeamId) {
-        gameDisplay =
+        away = "awayTeamwinner"
+      } else {
+        home = "homeTeamwinner"
+      }
+    }
+    let gameDisplay =
+    <div>
+      <div onClick={this.handleWinner} className={away} id={this.props.awayTeamId} >
+        <img src={assetHelper[`${this.props.awayTeamName}.gif`]} alt={this.props.awayTeamName}
+          className={away} id={this.props.awayTeamId}
+        />
+        <p className={away} id={this.props.awayTeamId}>
+          {this.props.awayTeamLocation} {this.props.awayTeamName}
+        </p>
+      </div>
+      <span>AT</span>
+      <div onClick={this.handleWinner} className={home} id={this.props.homeTeamId} >
+        <img
+          src={assetHelper[`${this.props.homeTeamName}.gif`]}
+          alt={this.props.homeTeamName}
+          className={home}
+          id={this.props.homeTeamId}
+        />
+        <p className={home} id={this.props.homeTeamId}>
+          {this.props.homeTeamLocation} {this.props.homeTeamName}
+        </p>
+      </div>
+    </div> ;
+
+
+
+    let scoreList;
+    let availableScores = this.props.availableConfidenceScores
+    scoreList = this.props.availableConfidenceScores.map((score) => {
+      return (
+        <option
+          key={`${this.props.gameId}-${score}`}
+          className="dropDownOption"value={score}>{score}
+        </option>)
+      })
+
+      return(
         <div>
-          <div onClick={this.handleWinner} className="awayTeamwinner" id={this.props.awayTeamId} >
-              <img
-                src={assetHelper[`${this.props.awayTeamName}.gif`]}
-                alt={this.props.awayTeamName}
-                className="awayTeamwinner"
-                id={this.props.awayTeamId}
-              />
-              <p className="awayTeamwinner" id={this.props.awayTeamId}>
-                {this.props.awayTeamLocation} {this.props.awayTeamName}
-              </p>
-          </div>
-          <span>AT</span>
-          <div onClick={this.handleWinner} className="homeTeam" id={this.props.homeTeamId} >
-            <img
-              src={assetHelper[`${this.props.homeTeamName}.gif`]}
-              alt={this.props.homeTeamName}
-              className="homeTeam"
-              id={this.props.homeTeamId}
-            />
-            <p className="homeTeam" id={this.props.homeTeamId}>
-              {this.props.homeTeamLocation} {this.props.homeTeamName}
-            </p>
-          </div>
-          </div>
-          } else {
-            gameDisplay =
-            <div>
-              <div onClick={this.handleWinner} className="awayTeam" id={this.props.awayTeamId} >
-                  <img
-                    src={assetHelper[`${this.props.awayTeamName}.gif`]}
-                    alt={this.props.awayTeamName}
-                    className="awayTeam"
-                    id={this.props.awayTeamId}
-                 />
-                  <p className="awayTeam" id={this.props.awayTeamId}>
-                    {this.props.awayTeamLocation} {this.props.awayTeamName}
-                  </p>
-                </div>
-                <span>AT</span>
-                <div onClick={this.handleWinner} className="homeTeamwinner" id={this.props.homeTeamId} >
-                    <img
-                      src={assetHelper[`${this.props.homeTeamName}.gif`]}
-                      alt={this.props.homeTeamName}
-                      className="homeTeamwinner"
-                      id={this.props.homeTeamId}
-                    />
-                    <p className="homeTeamwinner" id={this.props.homeTeamId}>
-                      {this.props.homeTeamLocation} {this.props.homeTeamName}
-                    </p>
-                  </div>
-                </div>
-              }
-            } else {
-              gameDisplay =
-              <div>
-                <div onClick={this.handleWinner} className="awayTeam" id={this.props.awayTeamId} >
-                    <img src={assetHelper[`${this.props.awayTeamName}.gif`]} alt={this.props.awayTeamName}
-                        className="awayTeam" id={this.props.awayTeamId}
-                     />
-                    <p
-                        className="awayTeam" id={this.props.awayTeamId}
-                      >{this.props.awayTeamLocation} {this.props.awayTeamName}</p>
-                  </div>
-                  <span>AT</span>
-                  <div onClick={this.handleWinner} className="homeTeam" id={this.props.homeTeamId} >
-                      <img
-                        src={assetHelper[`${this.props.homeTeamName}.gif`]}
-                        alt={this.props.homeTeamName}
-                        className="homeTeam"
-                        id={this.props.homeTeamId}
-                        />
-                      <p className="homeTeam" id={this.props.homeTeamId}>
-                        {this.props.homeTeamLocation} {this.props.homeTeamName}
-                      </p>
-                    </div>
-                  </div>
-                }
+          <form className="gameForm">
+            <div className="small-6 medium-4 large-3 columns end gameTile">
+              {gameDisplay}
+              <span className="conScore">Confidence Score</span>
+              <select value={this.state.value} onChange={this.handleChange}>
+                {currentSelection}
+                {zeroValue}
+                {scoreList}
+              </select>
+              <div className="gameTime">
+                {this.props.gametime.toLocaleDateString()} @ {this.props.gametime.toLocaleTimeString()}
+              </div>
+            </div>
+          </form>
+        </div>
+      )}
+    }
 
 
-                let scoreList;
-                let availableScores = this.props.availableConfidenceScores
-                scoreList = this.props.availableConfidenceScores.map((score) => {
-                  return (
-                    <option
-                      key={`${this.props.gameId}-${score}`}
-                      className="dropDownOption"value={score}>{score}
-                    </option>)
-                  })
-
-                  return(
-                    <div>
-                      <form className="gameForm">
-                        <div className="small-6 medium-4 large-3 columns end gameTile">
-                          {gameDisplay}
-                          <span className="conScore">Confidence Score</span>
-                          <select value={this.state.value} onChange={this.handleChange}>
-                            {currentSelection}
-                            {zeroValue}
-                            {scoreList}
-                          </select>
-                        </div>
-                      </form>
-                    </div>
-                  )}
-                }
-
-
-                export default GameTile
+    export default GameTile
