@@ -1,4 +1,4 @@
-<div class="fieldBackgroundShow">
+<div class="leagueShow">
   <h2 class="welcomeHeader">League Homepage for <%= @league.league_name %></h1>
 
   <div class="leaderBoard">
@@ -46,7 +46,7 @@
             <% if home == "49ers" %>
           <% home = "Niners" %>
           <% end %>
-            <div class="small-6 small-offset-3 medium-4 medium-offset-4 large-3 large-offset-0 columns game end">
+            <div class="small-6 small-offset-3 medium-3 medium-offset-2 large-3 large-offset-0 columns game end">
               <span> <%=game.gametime.strftime('%a, %B %e at %l%M%p')%> </span>
               <div class="gameTeam" id=<%="#{away}"%>></div>AT<br><div class="gameTeam" id=<%="#{home}"%>></div>
             </div>
@@ -62,7 +62,7 @@
           <% if name == "49ers" %>
             <% name = "Niners" %>
           <% end %>
-        <div class="small-6 medium-4 large-3 columns gamePick" id=<%="#{name}"%>>
+        <div class="small-6 medium-3 large-3 columns gamePick" id=<%="#{name}"%>>
           <span>
             <%=Team.find_by_id(pick[:winning_team]).location%>
             <%=Team.find_by_id(pick[:winning_team]).team_name%>
