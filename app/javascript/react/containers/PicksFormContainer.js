@@ -177,6 +177,8 @@ class PicksFormContainer extends Component {
     }, this)
   } else {
     games = this.state.games.map((game) => {
+      let dateTime = Date.parse(game.gametime)
+      let gameTime = new Date(dateTime)
       return(
         <GameTile
           key={game.id}
