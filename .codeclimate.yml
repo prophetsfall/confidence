@@ -39,3 +39,4 @@ exclude_paths:
 - app/assets/
 - lib/
 - bin/
+- karma.conf.js

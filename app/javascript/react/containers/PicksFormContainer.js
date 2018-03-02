@@ -10,7 +10,8 @@ class PicksFormContainer extends Component {
       availableConfidenceScores: [],
       picks:[],
       editFlag: false,
-      noGames: false
+      noGames: false,
+      errors: ""
     }
     this.handleSelectWinner = this.handleSelectWinner.bind(this)
     this.handleConfidenceAssignment = this.handleConfidenceAssignment.bind(this)
@@ -35,7 +36,7 @@ class PicksFormContainer extends Component {
       if (body.games === "none"){
         this.setState({noGames: true})
       }
-      else {
+      else { 
         let editFlag = false
         if( body.picks.length===body.games.length)
         {editFlag = true}
@@ -55,7 +56,8 @@ class PicksFormContainer extends Component {
     event.preventDefault()
     let formPayload = {
       leagueID: this.state.leagueID,
-      picks:this.state.picks
+      picks:this.state.picks,
+      timeSubmitted: Date()
     }
     this.submitPicks(formPayload)
   }
@@ -86,8 +88,8 @@ class PicksFormContainer extends Component {
         }
       })
       .then(response => response.json())
-      .then(body => {
-          this.setState({picks:body.picks})
+      .then(body => {debugger
+          this.setState({picks:body.picks, errors: body.errors})
           alert("Picks submitted successfully")
           location.href=`/leagues/${leagueID}`
 

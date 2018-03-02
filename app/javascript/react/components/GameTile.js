@@ -106,8 +106,6 @@ class GameTile extends Component {
       </div>
     </div> ;
 
-
-
     let scoreList;
     let availableScores = this.props.availableConfidenceScores
     scoreList = this.props.availableConfidenceScores.map((score) => {
