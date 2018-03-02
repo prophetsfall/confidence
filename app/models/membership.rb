@@ -10,10 +10,8 @@ class Membership < ApplicationRecord
     membership = Membership.where('user_id = ? AND league_id = ?', user,league).first
     season_score = membership.season_score
     season_score = 0
-
     weeks.each do |week|
       week_score = Membership.weekly_score(membership.user_id, membership.league_id,week.id)
-
       season_score += week_score
     end
     season_score
