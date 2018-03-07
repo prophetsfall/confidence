@@ -36,7 +36,7 @@ class PicksFormContainer extends Component {
       if (body.games === "none"){
         this.setState({noGames: true})
       }
-      else { 
+      else {
         let editFlag = false
         if( body.picks.length===body.games.length)
         {editFlag = true}
@@ -64,8 +64,8 @@ class PicksFormContainer extends Component {
 
   submitPicks(formPayload) {
     let gamesLength = this.state.games.length
-    let validateScore = formPayload.picks.filter(pick => pick.confidence >0 )
-    let validateWinner = formPayload.picks.filter(pick => pick.winning_team > 0 )
+    let validateScore = formPayload.picks.filter( pick => pick.confidence >0 )
+    let validateWinner = formPayload.picks.filter( pick => pick.winning_team > 0 )
     if (validateWinner.length === gamesLength && validateScore.length === gamesLength){
       let leagueID = this.state.leagueID
       fetch(`/api/v1/leagues/${leagueID}/picks`, {
@@ -88,7 +88,7 @@ class PicksFormContainer extends Component {
         }
       })
       .then(response => response.json())
-      .then(body => {debugger
+      .then(body => {
           this.setState({picks:body.picks, errors: body.errors})
           alert("Picks submitted successfully")
           location.href=`/leagues/${leagueID}`
