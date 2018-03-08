@@ -101,7 +101,9 @@ class Api::V1::PicksController < ApplicationController
           score -= 1
         end
         if !picks.nil?
-          available_scores = [0]
+          picks.each do |pick|
+            available_scores.delete(pick[:confidence])
+          end
         end
         available_scores
       end

@@ -34,12 +34,12 @@
     <%end %>
   <% end %>
   <% if @games %>
-    <% if @picks.length ==0  %>
       <h2 class="gameHead">Games for Week <%= @current_week.week_number %></h2>
       <div class="row">
           <% @games.each do |game| %>
           <% away =Team.find_by_id(game.away_team_id).team_name  %>
           <% home =Team.find_by_id(game.home_team_id).team_name  %>
+          <% pick = Pick.where('user_id = ? AND game_id = ? AND league_id = ?', current_user.id, game.id, @league.id) %>
           <% if away == "49ers" %>
             <% away = "Niners" %>
           <% end %>
@@ -49,30 +49,22 @@
             <div class="small-6 small-offset-3 medium-3 medium-offset-2 large-3 large-offset-0 columns game end">
               <span> <%=game.gametime.strftime('%a, %B %e at %l%M%p')%> </span>
               <div class="gameTeam" id=<%="#{away}"%>></div>AT<br><div class="gameTeam" id=<%="#{home}"%>></div>
+              <% if pick.length > 0 %>
+                <div class="gameWinner">
+                <div>Pick:
+                  <%= Team.find_by_id(pick[0].winning_team).team_name %>
+                </div>
+                <div>
+                  Confidence: <%= pick[0].confidence %>
+                </div>
+                </div>
+                <% else %>
+                <div></div>
+                <div></div>
+              <% end %>
             </div>
           <% end %>
       </div>
-
-    <% else %>
-    <div>
-    <h2 class="gameHead">Your picks for the week </h2>
-    <div class="row">
-      <% @picks.each do |pick| %>
-        <% name =Team.find_by_id(pick[:winning_team]).team_name%>
-          <% if name == "49ers" %>
-            <% name = "Niners" %>
-          <% end %>
-        <div class="small-6 medium-3 large-3 columns gamePick" id=<%="#{name}"%>>
-          <span>
-            <%=Team.find_by_id(pick[:winning_team]).location%>
-            <%=Team.find_by_id(pick[:winning_team]).team_name%>
-            <%=pick[:confidence]%>
-          </span>
-        </div>
-      <% end %>
-    </div>
-    </div>
-    <% end %>
 
   <% else %>
   <div>

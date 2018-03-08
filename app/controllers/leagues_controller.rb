@@ -15,8 +15,11 @@ class LeaguesController < ApplicationController
   def show
     @league = League.find_by_id(params[:id])
     @current_week = Week.current_week
-    @games = @current_week.games
+    games = @current_week.games
+    @games = games.sort
+
     @picks = Pick.user_picks(current_user.id, @league.id, @current_week.id)
+    @picks.sort_by! { |pick| pick[:game_id] }
     @scores = League.league_scores(@league.id)
 
     if @league

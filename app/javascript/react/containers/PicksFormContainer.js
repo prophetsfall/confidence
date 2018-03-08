@@ -17,6 +17,7 @@ class PicksFormContainer extends Component {
     this.handleConfidenceAssignment = this.handleConfidenceAssignment.bind(this)
     this.formSubmission = this.formSubmission.bind(this)
     this.submitPicks = this.submitPicks.bind(this)
+    this.findPick = this.findPick.bind(this)
   }
 
   componentDidMount() {
@@ -38,7 +39,7 @@ class PicksFormContainer extends Component {
       }
       else {
         let editFlag = false
-        if( body.picks.length===body.games.length)
+        if( body.picks.length >0 )
         {editFlag = true}
           this.setState({
           leagueID: leagueID,
@@ -145,14 +146,23 @@ class PicksFormContainer extends Component {
     this.setState({availableConfidenceScores:newAvailableScores, picks:newPicks})
   }
 
+  findPick(game) {
+    let pick;
+    let gamePick
+    pick = this.state.picks.filter(pick => pick.game_id === game.id)
+    if (pick.length > 0 ) {
+      return pick[0]
+    } else {
+      return{id:0, confidence:0, winning_team:0}
+    }
+  }
 
   render(){
     let games;
+    let gamePick
     if (this.state.editFlag == true) {
       games = this.state.games.map((game) => {
-        let gamePick = this.state.picks.find((pick) =>
-        (pick.game_id === game.id )
-      )
+        gamePick = this.findPick(game)
       let dateTime = Date.parse(game.gametime)
       let gameTime = new Date(dateTime)
       return(
