@@ -81,7 +81,6 @@ class PicksFormContainer extends Component {
       picks:submittedPicks,
       timeSubmitted: Date()
     }
-    debugger
     if (Date.parse(formPayload.timeSubmitted) < this.state.mainSlate) {
       this.submitPicks(formPayload)
     }
