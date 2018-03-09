@@ -2,9 +2,9 @@ class Api::V1::PicksController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @week_id = Week.current_week.id
+    @week = Week.current_week
     @league_id = params[:league_id]
-    @all_picks = Pick.user_picks(current_user.id, @league_id, @week_id)
+    @all_picks = Pick.user_picks(current_user.id, @league_id, @week.id)
     @games = game_details
     @picks = []
     @all_picks.each do |pick|
@@ -14,9 +14,19 @@ class Api::V1::PicksController < ApplicationController
     end
     if @games.length > 0
       if @picks.length > 0
-        render json: { games:game_details, availableScores: available_confidence_scores(@picks),picks:@picks}
+        render json: {
+          games:game_details,
+          availableScores: available_confidence_scores(@picks),
+          picks:@picks,
+          main: @week.main_slate_start
+        }
       else
-        render json: { games:game_details, availableScores: available_confidence_scores,picks:@picks}
+        render json: {
+          games:game_details,
+          availableScores: available_confidence_scores,
+          picks:@picks,
+          main: @week.main_slate_start
+        }
       end
     else
       render json: {games: "none"}
