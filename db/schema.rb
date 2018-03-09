@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180222004936) do
+ActiveRecord::Schema.define(version: 20180308210651) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -99,6 +99,7 @@ ActiveRecord::Schema.define(version: 20180222004936) do
     t.date "end_date", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "main_slate_start"
     t.index ["week_number", "year"], name: "index_weeks_on_week_number_and_year", unique: true
   end
 

@@ -11,12 +11,15 @@ class PicksFormContainer extends Component {
       picks:[],
       editFlag: false,
       noGames: false,
+      mainSlate: null,
       errors: ""
     }
     this.handleSelectWinner = this.handleSelectWinner.bind(this)
     this.handleConfidenceAssignment = this.handleConfidenceAssignment.bind(this)
     this.formSubmission = this.formSubmission.bind(this)
     this.submitPicks = this.submitPicks.bind(this)
+    this.findPick = this.findPick.bind(this)
+    this.validatePick = this.validatePick.bind(this)
   }
 
   componentDidMount() {
@@ -33,85 +36,88 @@ class PicksFormContainer extends Component {
     })
     .then(response => response.json())
     .then(body => {
+      let mainSlateStart = Date.parse(body.main)
       if (body.games === "none"){
         this.setState({noGames: true})
       }
-      else { 
+      else {
         let editFlag = false
-        if( body.picks.length===body.games.length)
+        if( body.picks.length >0 )
         {editFlag = true}
-          this.setState({
+        this.setState({
           leagueID: leagueID,
           games: body.games,
           availableConfidenceScores:body.availableScores,
           picks: body.picks,
+          mainSlate: mainSlateStart,
           editFlag: editFlag
-      })
-    }
+        })
+      }
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
+  validatePick(pick){
+    if (pick.winning_team > 0){
+      if (pick.confidence > 0) {
+        let game;
+        game = this.state.games.filter(game => game.id === pick.game_id)
+        if (Date.parse(game[0].gametime) < Date.now()) {
+          return pick
+        }
+        else {
+          return "Game has already started"
+        }
+      }
+    }
+  }
+
   formSubmission(event) {
     event.preventDefault()
+    let picks = this.state.picks
+    let submittedPicks = picks.filter(pick => this.validatePick(pick))
     let formPayload = {
       leagueID: this.state.leagueID,
-      picks:this.state.picks,
+      picks:submittedPicks,
       timeSubmitted: Date()
     }
-    this.submitPicks(formPayload)
+    if (Date.parse(formPayload.timeSubmitted) < this.state.mainSlate) {
+      this.submitPicks(formPayload)
+    }
+    else {
+      alert("The main slate has already started. You can no longer submit picks. Please contact your comissioner")
+      location.href=`/leagues/${leagueID}`
+    }
   }
 
   submitPicks(formPayload) {
-    let gamesLength = this.state.games.length
-    let validateScore = formPayload.picks.filter(pick => pick.confidence >0 )
-    let validateWinner = formPayload.picks.filter(pick => pick.winning_team > 0 )
-    if (validateWinner.length === gamesLength && validateScore.length === gamesLength){
-      let leagueID = this.state.leagueID
-      fetch(`/api/v1/leagues/${leagueID}/picks`, {
-          credentials: 'same-origin',
-          method: 'post',
-          body: JSON.stringify(formPayload),
-          headers: {
-            'Content-Type': 'application/json',
-            'X-Requested-With': 'XMLHttpRequest',
-            'X-CSRF-Token': $('meta[name=csrf-token]').attr('content')
-          }
-        })
-        .then(response => {
-        if (response.ok) {
-          return response;
-        } else {
-          let errorMessage = `${response.status} (${response.statusText})`,
-          error = new Error(errorMessage);
-          throw(error);
-        }
-      })
-      .then(response => response.json())
-      .then(body => {debugger
-          this.setState({picks:body.picks, errors: body.errors})
-          alert("Picks submitted successfully")
-          location.href=`/leagues/${leagueID}`
-
-      })
-      .catch(error => console.error(`Error in fetch: ${error.message}`));
-    }
-    else {
-      let errorScores;
-      let errorWinners;
-      if (validateScore.length < gamesLength ) {
-        errorScores = "You must select a score greater than 0 for each game!"
+    let leagueID = this.state.leagueID
+    fetch(`/api/v1/leagues/${leagueID}/picks`, {
+      credentials: 'same-origin',
+      method: 'post',
+      body: JSON.stringify(formPayload),
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        'X-CSRF-Token': $('meta[name=csrf-token]').attr('content')
+      }
+    })
+    .then(response => {
+      if (response.ok) {
+        return response;
       } else {
-        errorScores=''
+        let errorMessage = `${response.status} (${response.statusText})`,
+        error = new Error(errorMessage);
+        throw(error);
       }
-      if (formPayload.picks.length < gamesLength || validateWinner.length < gamesLength ) {
-        errorWinners = "You must select a winner for each game!"
-      }
-      else {
-        errorWinners=''
-      }
-    alert(`${errorScores}  ${errorWinners}`)
-    }
+    })
+    .then(response => response.json())
+    .then(body => {
+      this.setState({picks:body.picks, errors: body.errors})
+      alert("Picks submitted successfully")
+      location.href=`/leagues/${leagueID}`
+    })
+    .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
   handleSelectWinner(winner,confidence,gameId, pickId=0){
@@ -145,14 +151,22 @@ class PicksFormContainer extends Component {
     this.setState({availableConfidenceScores:newAvailableScores, picks:newPicks})
   }
 
+  findPick(game) {
+    let pick;
+    let gamePick
+    pick = this.state.picks.filter(pick => pick.game_id === game.id)
+    if (pick.length > 0 ) {
+      return pick[0]
+    } else {
+      return{id:0, confidence:0, winning_team:0}
+    }
+  }
 
   render(){
     let games;
-    if (this.state.editFlag == true) {
-      games = this.state.games.map((game) => {
-        let gamePick = this.state.picks.find((pick) =>
-        (pick.game_id === game.id )
-      )
+    let gamePick
+    games = this.state.games.map((game) => {
+      gamePick = this.findPick(game)
       let dateTime = Date.parse(game.gametime)
       let gameTime = new Date(dateTime)
       return(
@@ -177,43 +191,15 @@ class PicksFormContainer extends Component {
 
       )
     }, this)
-  } else {
-    games = this.state.games.map((game) => {
-      let dateTime = Date.parse(game.gametime)
-      let gameTime = new Date(dateTime)
-      return(
-        <GameTile
-          key={game.id}
-          gameId={game.id}
-          pickId={0}
-          homeTeamName={game.home_team_name}
-          awayTeamName={game.away_team_name}
-          homeTeamId={game.home_team_id}
-          awayTeamId={game.away_team_id}
-          homeTeamLocation={game.home_team_location}
-          awayTeamLocation={game.away_team_location}
-          winningTeam={game.winningTeam}
-          handleSelectWinner={this.handleSelectWinner}
-          selectedWinner={0}
-          confidenceScore={0}
-          availableConfidenceScores={this.state.availableConfidenceScores}
-          handleConfidenceAssignment={this.handleConfidenceAssignment}
-          gametime={gameTime}
-        />
-      )
-  })
-}
-
-
     return(
       <div className="row">
-      <form className="small-12 columns fieldBackgroundForm" onSubmit={this.formSubmission}>
-        <div className="small-12 columns pickForm">
-          {games}
-        </div>
-        <input type="submit" value="Submit" className="submitButton" />
-      </form>
-    </div>
+        <form className="small-12 columns fieldBackgroundForm" onSubmit={this.formSubmission}>
+          <div className="small-12 columns pickForm">
+            {games}
+          </div>
+          <input type="submit" value="Submit" className="submitButton" />
+        </form>
+      </div>
     )
   }
 }
