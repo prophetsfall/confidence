@@ -16,8 +16,8 @@ class League < ApplicationRecord
     league = League.find(league_id)
     members = league.memberships
     scores = members.map do |member|
-
       {
+        member_id: member.id,
         username: member.user.username,
         score_week: Membership.weekly_score(member.user_id,league_id, Week.current_week ),
         score_season: Membership.season_score(member.user_id, league_id, Week.current_week.year)
