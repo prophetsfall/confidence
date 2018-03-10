@@ -6,6 +6,12 @@ class MembershipsController < ApplicationController
     @membership = Membership.new
   end
 
+  def show
+    @membership = Membership.find_by_id(params[:id])
+    @picks = Pick.user_picks(@membership.user_id, @membership.league_id, Week.current_week)
+    @picks.sort_by! { |pick| pick[:confidence] }.reverse!
+  end
+
   def create
     @league = League.find(params[:league_id])
     @membership = Membership.new(user:current_user, league: @league)
