@@ -40,25 +40,7 @@ if Team.all.length < 32
   Team.create!(location:'Washington', team_name:'Redskins')
 end
 
-if Week.all.length < 17
-  Week.create!(week_number:1, year:2018, start_date:Date.new(2018,8,1), end_date:Date.new(2018,9,12),Rational(-4,24)))
-  Week.create!(week_number:2, year:2018, start_date:Date.new(2018,9,13), end_date:Date.new(2018,9,19),Rational(-4,24)))
-  Week.create!(week_number:3, year:2018, start_date:Date.new(2018,9,20), end_date:Date.new(2018,9,26),Rational(-4,24)))
-  Week.create!(week_number:4, year:2018, start_date:Date.new(2018,9,27), end_date:Date.new(2018,10,3),Rational(-4,24)))
-  Week.create!(week_number:5, year:2018, start_date:Date.new(2018,10,4), end_date:Date.new(2018,10,10),Rational(-4,24)))
-  Week.create!(week_number:6, year:2018, start_date:Date.new(2018,10,11), end_date:Date.new(2018,10,17),Rational(-4,24)))
-  Week.create!(week_number:7, year:2018, start_date:Date.new(2018,10,18), end_date:Date.new(2018,10,24),Rational(-4,24)))
-  Week.create!(week_number:8, year:2018, start_date:Date.new(2018,10,25), end_date:Date.new(2018,10,31),Rational(-4,24)))
-  Week.create!(week_number:9, year:2018, start_date:Date.new(2018,11,1), end_date:Date.new(2018,11,7),Rational(-4,24)))
-  Week.create!(week_number:10, year:2018, start_date:Date.new(2018,11,8), end_date:Date.new(2018,11,14),Rational(-4,24)))
-  Week.create!(week_number:11, year:2018, start_date:Date.new(2018,11,15), end_date:Date.new(2018,11,21),Rational(-4,24)))
-  Week.create!(week_number:12, year:2018, start_date:Date.new(2018,11,22), end_date:Date.new(2018,11,28),Rational(-4,24)))
-  Week.create!(week_number:13, year:2018, start_date:Date.new(2018,11,29), end_date:Date.new(2018,12,5),Rational(-4,24)))
-  Week.create!(week_number:14, year:2018, start_date:Date.new(2018,12,6), end_date:Date.new(2018,12,12),Rational(-4,24)))
-  Week.create!(week_number:15, year:2018, start_date:Date.new(2018,12,13), end_date:Date.new(2018,12,19),Rational(-4,24)))
-  Week.create!(week_number:16, year:2018, start_date:Date.new(2018,12,20), end_date:Date.new(2018,12,26),Rational(-4,24)))
-  Week.create!(week_number:17, year:2018, start_date:Date.new(2018,12,27), end_date:Date.new(2018,1,1),Rational(-4,24)))
-end
+
 
 Game.create!(week_id:20, away_team_id:25, home_team_id:8,gametime: DateTime.new(2018,9,9,13,00,0,Rational(-4,24)))
 Game.create!(week_id:20, away_team_id:7, home_team_id:14,gametime: DateTime.new(2018,9,9,13,00,0,Rational(-4,24)))
