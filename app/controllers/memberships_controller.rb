@@ -5,6 +5,11 @@ class MembershipsController < ApplicationController
     @league = League.find(params[:league_id])
     @membership = Membership.new
   end
+  def index
+    @league = League.find(params[:league_id])
+    @memberships = Membership.where(league_id:params[:league_id])
+    @picks = League.league_picks(@league)
+  end
 
   def show
     @membership = Membership.find_by_id(params[:id])
