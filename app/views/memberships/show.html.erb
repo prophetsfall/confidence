@@ -1,11 +1,13 @@
 <h1 class="membershipHeader">
-<%= @membership.user.username%>'s picks for week <%= Week.current_week.week_number %>
+  <%= @membership.user.username%>'s picks for week <%= Week.current_week.week_number %>
 </h1>
 <ul class="pickList">
-<% @picks.each do |pick| %>
+  <% @picks.each do |pick| %>
+  <% if Game.find(pick[:game_id]).gametime < Time.now %>
   <li userPick>
-  <%= pick[:confidence] %>
-  <%= Team.find(pick[:winning_team]).location %> <%= Team.find(pick[:winning_team]).team_name %>
+    <%= pick[:confidence] %>
+    <%= Team.find(pick[:winning_team]).location %> <%= Team.find(pick[:winning_team]).team_name %>
   </li>
+  <% end %>
   <% end %>
 </ul>
