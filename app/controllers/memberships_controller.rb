@@ -5,13 +5,17 @@ class MembershipsController < ApplicationController
     @league = League.find(params[:league_id])
     @membership = Membership.new
   end
+
   def index
+    @user = current_user
+    binding.pry
     @league = League.find(params[:league_id])
     @memberships = Membership.where(league_id:params[:league_id])
     @picks = League.league_picks(@league)
   end
 
   def show
+    @user = current_user
     @membership = Membership.find_by_id(params[:id])
     @picks = Pick.user_picks(@membership.user_id, @membership.league_id, Week.current_week)
     @picks.sort_by! { |pick| pick[:confidence] }.reverse!
