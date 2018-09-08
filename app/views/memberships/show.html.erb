@@ -5,14 +5,13 @@
   <% @picks.each do |pick| %>
   <% team =Team.find_by_id(pick[:winning_team]) %>
   <% if team == "49ers" %>
-    <% team = "Niners" %>
+  <% team = "Niners" %>
   <% end %>
 
   <% if @user == @membership.user || Game.find(pick[:game_id]).gametime < Time.now %>
-    <li class="pickedGame" id=<%="#{team.team_name}"%>>
+  <li class="pickedGame" id=<%="#{team.team_name}"%>>
     <%= pick[:confidence] %>
-    </li>
-  <% end %>
+  </li>
   <% end %>
   <% end %>
 </ul>
