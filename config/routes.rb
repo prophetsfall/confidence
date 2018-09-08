@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   resources :memberships
 
   resources :leagues do
-    resources :memberships, only: [:new, :create, :show]
+    resources :memberships, only: [:index, :new, :create, :show]
     resources :picks, only: [:index, :edit,:update]
 
   end
