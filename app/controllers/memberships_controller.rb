@@ -8,7 +8,7 @@ class MembershipsController < ApplicationController
 
   def index
     @user = current_user
-    binding.pry
+
     @league = League.find(params[:league_id])
     @memberships = Membership.where(league_id:params[:league_id])
     @picks = League.league_picks(@league)

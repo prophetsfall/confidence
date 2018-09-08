@@ -29,7 +29,6 @@ class League < ApplicationRecord
   def self.league_picks(league)
     members = league.memberships
     games = Week.current_week.games
-    binding.pry
   end
 
   def self.valid_name?(str)
