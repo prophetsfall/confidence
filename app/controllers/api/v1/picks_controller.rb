@@ -16,7 +16,7 @@ class Api::V1::PicksController < ApplicationController
       if @picks.length > 0
         render json: {
           games:game_details,
-          availableScores: available_confidence_scores(@picks),
+          availableScores: available_confidence_scores(@all_picks),
           picks:@picks,
           main: @week.main_slate_start
         }
@@ -103,7 +103,8 @@ class Api::V1::PicksController < ApplicationController
       end
 
       def available_confidence_scores(picks = nil)
-        counter = game_details.length
+        all_games =  Week.current_week.games
+        counter = all_games.length
         score = 16
         available_scores =[]
         counter.times do
