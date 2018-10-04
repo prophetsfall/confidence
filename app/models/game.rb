@@ -8,5 +8,8 @@ class Game < ApplicationRecord
 
   belongs_to :week
 
+  def self.game_picks(game,league)
+    picks = Pick.where(league:league, game:game)
+  end
 
 end

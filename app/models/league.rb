@@ -26,11 +26,6 @@ class League < ApplicationRecord
     scores = scores.sort_by { |k| k[:score_season]}.reverse
   end
 
-  def self.league_picks(league)
-    members = league.memberships
-    games = Week.current_week.games
-  end
-
   def self.valid_name?(str)
     return true if (/^[a-z\d\-_\s]+$/i.match(str))
     return false

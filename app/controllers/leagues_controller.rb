@@ -59,9 +59,6 @@ class LeaguesController < ApplicationController
     end
   end
 
-
-
-
   protected
   def league_params
     params.require(:league).permit(:league_name, :max_members, :invite_only)
