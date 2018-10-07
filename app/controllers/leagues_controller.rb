@@ -17,7 +17,7 @@ class LeaguesController < ApplicationController
     @current_week = Week.current_week
     games = @current_week.games
     @games = games.sort
-
+    @member = current_user
     @picks = Pick.user_picks(current_user.id, @league.id, @current_week.id)
     @picks.sort_by! { |pick| pick[:game_id] }
     @scores = League.league_scores(@league.id)

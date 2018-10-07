@@ -60,22 +60,22 @@
 
     <% else %>
       <h2 class="gameHead">Games for Week <%= @current_week.week_number %></h2>
-      <h2 class="gameHead">Games for <%= member.username %></h2>
+      <h2 class="gameHead">Games for <%= @member.username %></h2>
       <div class="row">
         <% @games.each do |game| %>
         <% away =Team.away(game).team_name  %>
         <% home =Team.home(game).team_name  %>
 
-        <% pick = Pick.where('user_id = ? AND game_id = ? AND league_id = ?', User.find_by(username:member.username), game.id, @league.id) %>
-        <% if away.team_name == "49ers" %>
+        <% pick = Pick.where('user_id = ? AND game_id = ? AND league_id = ?', User.find_by(username:@member.username), game.id, @league.id) %>
+        <% if away == "49ers" %>
           <% away = "Niners" %>
         <% end %>
-        <% if home.team_name == "49ers" %>
+        <% if home == "49ers" %>
           <% home = "Niners" %>
         <% end %>
         <div class="small-6 small-offset-3 medium-3 medium-offset-2 large-3 large-offset-0 columns game end">
           <span> <%=game.gametime.in_time_zone("America/New_York").strftime('%a, %B %e at %l%M%p %Z')%> </span>
-          <div class="gameTeam" id=<%="#{away.team_name}"%>></div>AT<br><div class="gameTeam" id=<%="#{home.team_name}"%>></div>
+          <div class="gameTeam" id=<%="#{away}"%>></div>AT<br><div class="gameTeam" id=<%="#{home}"%>></div>
           <% if pick.length > 0 && !game.winner_id  %>
             <div class="gameWinner">
               <div>Pick:
