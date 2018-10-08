@@ -180,3 +180,12 @@ h3 {
   color: black;
   font-weight: bold;
 }
+
+.winner {
+  border-color:green;
+  border-style:solid;
+  border-width: thick;
+}
+.loser {
+  border-color: red;
+}
