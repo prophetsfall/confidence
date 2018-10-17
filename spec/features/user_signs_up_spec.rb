@@ -12,6 +12,8 @@ feature 'user registers', %Q{
   # * If I don't specify the required information, I am presented with
   #   an error message
 
+  let!(:week) {Week.create!(week_number:21, year:2018, start_date:Date.new(2017,12,27), end_date:Date.new(2099,4,1), main_slate_start:Date.tomorrow)}
+
   scenario 'provide valid registration information' do
     visit new_user_registration_path
 
