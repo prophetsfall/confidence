@@ -48,8 +48,10 @@
             <td headers="game"><%=away.team_name%> @ <%= home.team_name %> </td>
           <% picks = Game.game_picks(game, @league) %>
               <% picks.each do |pick| %>
-              <% team_name = Team.find(pick.winning_team).team_name %>
-              <td headers="#{<%=pick.user.username %>}"><%="#{pick.user.first_name} | #{team_name} | #{pick.confidence}"%></span></td>
+              <% team = Team.find(pick.winning_team) %>
+              <td class="">
+                <span><%="#{pick.user.first_name} | #{team.team_name} | #{pick.confidence}"%></span>
+              </td>
               <% end %>
           </tr>
           <%end%>

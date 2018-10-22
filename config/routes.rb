@@ -13,8 +13,12 @@ Rails.application.routes.draw do
   resources :users
   resources :memberships
 
+
   resources :leagues do
-    resources :memberships, only: [:index, :new, :create, :show]
+    resources :games, only: [:index, :edit, :update]
+    resources :memberships, only: [:index, :new, :create, :show] do
+      resources :picks, only: [:show]
+    end
     resources :picks, only: [:index, :edit,:update]
 
   end
