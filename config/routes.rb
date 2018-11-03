@@ -4,17 +4,21 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
+      resources :memberships
       resources :leagues, only: [] do
         resources :picks, only: [:index, :create]
+        resources :memberships, only: [:index]
       end
     end
   end
 
   resources :users
-  resources :memberships
 
   resources :leagues do
-    resources :memberships, only: [:index, :new, :create, :show]
+    resources :games, only: [:index, :edit, :update]
+    resources :memberships, only: [ :new, :create, :show] do
+      resources :picks, only: [:show]
+    end
     resources :picks, only: [:index, :edit,:update]
 
   end

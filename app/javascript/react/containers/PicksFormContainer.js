@@ -164,7 +164,8 @@ class PicksFormContainer extends Component {
 
   render(){
     let games;
-    let gamePick
+    debugger;
+    let gamePick;
     games = this.state.games.map((game) => {
       gamePick = this.findPick(game)
       let dateTime = Date.parse(game.gametime)

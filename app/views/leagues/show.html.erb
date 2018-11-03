@@ -1,5 +1,6 @@
 <div class="leagueShow">
-  <h2 class="welcomeHeader">League Homepage for <%= @league.league_name %></h1>
+  <h2 class="welcomeHeader">League Homepage for <%= @league.league_name %></h2>
+    <h1> <%= link_to "Memberships", league_memberships_path(@league) %></h1>
 
     <div class="leaderBoard">
       <table role="grid" class="row">

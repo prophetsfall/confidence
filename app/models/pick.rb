@@ -12,8 +12,12 @@ class Pick < ApplicationRecord
         winning_team: pick.winning_team,
         confidence: pick.confidence,
         game_id: pick.game_id
-
       }
     end
+  end
+
+  def self.league_picks(week,league)
+    picks = Pick.where(week:week, league:league)
+    binding.pry
   end
 end
