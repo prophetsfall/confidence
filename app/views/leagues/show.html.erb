@@ -33,7 +33,7 @@
         <% end %>
       <%end %>
     <% end %>
-
+    <% if @current_week.main_slate_start %>
     <% if @games && Time.now > @current_week.main_slate_start %>
     <div class ="leaguePicks">
       <table role="grid" class="row">
@@ -91,6 +91,9 @@
         </div>
         <% end %>
       </div>
+      <% end %>
+      <% else %>
+      <div>No slate</div>
       <% end %>
 
   </div>

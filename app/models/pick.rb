@@ -12,8 +12,7 @@ class Pick < ApplicationRecord
         winning_team: pick.winning_team,
         confidence: pick.confidence,
         game_id: pick.game_id
-
-      }
+        }
     end
   end
 end

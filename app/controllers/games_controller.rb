@@ -8,7 +8,8 @@ class GamesController < ApplicationController
   end
 
   def edit
-
+    @game = Game.find(params[:id])
+    binding.pry
   end
 
   def update
