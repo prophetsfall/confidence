@@ -1,6 +1,7 @@
 <h1 class="membershipHeader">
   <%= @membership.user.username%>'s picks for week <%= Week.current_week.week_number %>
 </h1>
+<div> <%= link_to "Games", league_games_path(@membership.league) %> </div>
 <div class="pickList">
   <% @picks.each do |pick| %>
   <% team = Team.find_by_id(pick[:winning_team]) %>

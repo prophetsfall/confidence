@@ -5,6 +5,8 @@ feature 'user signs in', %Q{
   I want to sign in
   So that I can regain access to my account
 } do
+  let!(:week) {Week.create!(week_number:21, year:2018, start_date:Date.new(2017,12,27), end_date:Date.new(2099,4,1), main_slate_start:Date.tomorrow)}
+
   scenario 'specify valid credentials' do
     user = FactoryBot.create(:user)
 

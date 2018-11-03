@@ -16,7 +16,6 @@ class PicksController < ApplicationController
    protected
    def pick_params
      params.require(:league).permit(@league, @current_week, @games, @picks)
-
    end
 
 end
