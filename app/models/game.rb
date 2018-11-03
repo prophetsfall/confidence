@@ -12,4 +12,10 @@ class Game < ApplicationRecord
     picks = Pick.where(league:league, game:game)
   end
 
+  def self.teams(game)
+    home = game.home_team
+    away = game.away_team
+    [home, away]
+  end
+
 end

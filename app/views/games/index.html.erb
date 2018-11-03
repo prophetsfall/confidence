@@ -11,12 +11,18 @@
   <% if home == "49ers" %>
     <% home = "Niners" %>
   <% end %>
+
   <div class="small-6 small-offset-3 medium-3 medium-offset-2 large-3 large-offset-0 columns game end">
-    <span> <%=game.gametime.in_time_zone("America/New_York").strftime('%a, %B %e at %l%M%p %Z')%> </span>
+    <span> <%=game.gametime.in_time_zone("America/New_York").strftime('%a, %B %e at %l%M%p %Z')%></span>
     <div class="gameTeam" id=<%="#{away}"%>></div>AT<br><div class="gameTeam" id=<%="#{home}"%>></div>
     <span>
       <%= link_to "Edit", edit_league_game_path(@league,game) %>
     </span>
+    <% if game.winner_id %>
+      <span>
+        Winner:<%= Team.find(game.winner_id).team_name%>
+      </span>
+    <% end %>
   </div>
   <% end %>
 </div>

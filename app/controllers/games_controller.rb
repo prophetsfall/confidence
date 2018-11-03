@@ -8,12 +8,16 @@ class GamesController < ApplicationController
   end
 
   def edit
+    @league = League.find(params[:league_id])
     @game = Game.find(params[:id])
-    binding.pry
+    @teams = Game.teams(@game)
   end
 
   def update
-
+    game = Game.find(params[:id])
+    winner = params[:game][:winner_id]
+    game.update(winner_id:winner)
+    redirect_to league_games_path
   end
 
   def validate_commissioner
