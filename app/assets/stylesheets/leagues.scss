@@ -93,3 +93,13 @@
   background-color: black;
   background-blend-mode: saturation;
 }
+
+.boardPickRow {
+  border-bottom: solid;
+  border-left: solid;
+  border-color: inherit;
+}
+.boardPickColumn {
+  border-bottom: solid;
+  border-color: inherit;
+}
