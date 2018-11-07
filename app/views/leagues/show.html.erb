@@ -38,7 +38,6 @@
     <div class ="leaguePicks">
       <table role="grid" class="row">
         <thead class="row gamePickGrid">
-
         </thead>
         <tbody>
           <% @games.each do |game| %>
@@ -46,7 +45,7 @@
           <% home =Team.home(game)  %>
           <tr pickGridLine>
             <td headers="game"><%=away.team_name%> @ <%= home.team_name %> </td>
-          <% picks = Game.game_picks(game, @league) %>
+          <% picks = Game.game_picks(game, @league, @members) %>
               <% picks.each do |pick| %>
               <% team = Team.find(pick.winning_team) %>
               <td class="">
