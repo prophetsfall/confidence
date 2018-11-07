@@ -23,7 +23,7 @@
       </table>
     </div>
 
-    <% if !@members.find_by_id(current_user.id) %>
+    <% if !@members.include?(User.find_by_id(current_user.id)) %>
       <%= link_to "Join this league", league_memberships_path(@league), {method: :post,class:"joinPickLink"}  %>
     <% else %>
       <% if @games %>
@@ -34,12 +34,15 @@
         <% end %>
       <%end %>
     <% end %>
-
+    <% if @current_week.main_slate_start %>
     <% if @games && Time.now > @current_week.main_slate_start %>
     <div class ="leaguePicks">
       <table role="grid" class="row">
         <thead class="row gamePickGrid">
-
+          <th class="boardPickColumn">Game</th>
+          <% @members.each do |member| %>
+            <th class="boardPickColumn"> <%= member.username%> </th>
+          <% end %>
         </thead>
         <tbody>
           <% @games.each do |game| %>
@@ -47,10 +50,12 @@
           <% home =Team.home(game)  %>
           <tr pickGridLine>
             <td headers="game"><%=away.team_name%> @ <%= home.team_name %> </td>
-          <% picks = Game.game_picks(game, @league) %>
+          <% picks = Game.game_picks(game, @league, @members) %>
               <% picks.each do |pick| %>
-              <% team_name = Team.find(pick.winning_team).team_name %>
-              <td headers="#{<%=pick.user.username %>}"><%="#{pick.user.first_name} | #{team_name} | #{pick.confidence}"%></span></td>
+              <% team = Team.find(pick.winning_team) %>
+              <td class="boardPickRow">
+                <span><%="#{team.team_name} | #{pick.confidence}"%></span>
+              </td>
               <% end %>
           </tr>
           <%end%>
@@ -90,6 +95,9 @@
         </div>
         <% end %>
       </div>
+      <% end %>
+      <% else %>
+      <div>No slate</div>
       <% end %>
 
   </div>

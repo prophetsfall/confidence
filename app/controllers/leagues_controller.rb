@@ -19,12 +19,11 @@ class LeaguesController < ApplicationController
     @games = games.sort
     @member = current_user
     @picks = Pick.user_picks(current_user.id, @league.id, @current_week.id)
-    @picks.sort_by! { |pick| pick[:game_id] }
     @scores = League.league_scores(@league.id)
-
     if @league
       @members = @league.users
-      if @league.public_league? || @members.find_by_id(current_user.id)
+      @members = @members.sort_by{|member| member.id}
+      if @league.public_league? || @members.include?(User.find_by_id(current_user.id))
         League.league_scores(@league.id)
         @scores.sort_by! {|score| score[:score]}.reverse
         render :show
@@ -62,7 +61,6 @@ class LeaguesController < ApplicationController
   protected
   def league_params
     params.require(:league).permit(:league_name, :max_members, :invite_only)
-
   end
 
 end

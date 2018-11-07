@@ -13,7 +13,7 @@ class Api::V1::PicksController < ApplicationController
       end
     end
     if @games.length > 0
-      if @picks.length > 0
+      if @all_picks.length > 0
         render json: {
           games:game_details,
           availableScores: available_confidence_scores(@all_picks),
@@ -57,7 +57,7 @@ class Api::V1::PicksController < ApplicationController
           )
         end
       else
-        errors = "Some picks could not be saved because the game has begun"
+        errors = "Some picks could not be saved because the game has begun."
       end
     end
       if picks.length > 0

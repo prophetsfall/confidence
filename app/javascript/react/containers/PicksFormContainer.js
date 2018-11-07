@@ -114,8 +114,13 @@ class PicksFormContainer extends Component {
     .then(response => response.json())
     .then(body => {
       this.setState({picks:body.picks, errors: body.errors})
+      if (body.errors) {
+          alert(body.errors)
+          location.href=`/leagues/${leagueID}`
+      } else {
       alert("Picks submitted successfully")
       location.href=`/leagues/${leagueID}`
+    }
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
