@@ -6,7 +6,7 @@ class Pick < ApplicationRecord
 
   def self.user_picks(user,league,week)
     picks = Pick.where('user_id = ? AND league_id =? and week_id = ?', user, league,week)
-    picks.map do |pick|
+    picks = picks.map do |pick|
       {
         id: pick.id,
         winning_team: pick.winning_team,
@@ -14,5 +14,8 @@ class Pick < ApplicationRecord
         game_id: pick.game_id
         }
     end
+
+   picks.sort_by! { |pick| pick[:game_id] }
+
   end
 end

@@ -8,9 +8,24 @@ class Game < ApplicationRecord
 
   belongs_to :week
 
-  def self.game_picks(game,league)
-    picks = Pick.where(league:league, game:game)
+  def self.game_picks(game,league,users)
+    picks = []
+    members = []
+    users.each_with_index do |user, index|
+      members << {index => user}
+    end
+
+    members.each do |member|
+      user = member.values[0]
+      pick = Pick.find_by(game:game , user_id:user)
+      if pick
+        picks << pick
+      end
+    end
+    
+    picks.sort_by!{ |key, value | key[:user_id]}
   end
+
 
   def self.teams(game)
     home = game.home_team
