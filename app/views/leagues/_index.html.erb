@@ -1,0 +1,15 @@
+<div class="fieldLeagueHome">
+  <h2 class="welcomeHeader">Available Leagues</h2>
+  <div class="leagueList">
+    <div class="columns small-6 small-offset-3 medium-8 medium-offset-2 large-10 large-offset-1">
+      <div class="row">
+        <% @open_leagues.each do |league| %>
+        <div class="leagueJoin small-8 medium-6 large-4 columns end"><%= link_to league.league_name, league_path(league) %></div>
+        <% end %>
+      </div>
+    </div>
+    <div class="row createLink">
+      <%= link_to "Create a custom league", new_league_path %>
+    </div>
+  </div>
+</div>

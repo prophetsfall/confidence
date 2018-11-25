@@ -1,0 +1,40 @@
+<div class="fieldBackgroundHome">
+
+<div id="app"></div>
+<% if current_user %>
+<h2 class="welcomeHeader">Welcome <%=current_user.first_name%></h2>
+  <table role="grid" class="row leagueBoard">
+    <thead class="row leagueBoard">
+    <th class="small-6 medium-6 large-6 columns rank">League Name</th>
+    <th class="small-3 medium-3 large-3 columns">Season Score</th>
+    <th class="small-3 medium-3 large-3 columns weeklyScore">Score for week <%=@week.week_number  %> </th>
+  </thead>
+    <tbody class="leagueBoard">
+    <% @scores.each do |score|%>
+    <tr>
+      <td class="small-6 medium-6 large-6 columns rank"><%= link_to League.find_by_id(score[:league]).league_name, league_path(score[:league]) %></td>
+      <td class="small-3 medium-3 large-3 columns weeklyScore"><%=score[:year]%></td>
+      <td class="small-3 medium-3 large-3 columns"><%= score[:week] %></td>
+    </tr>
+    <%end%>
+  </tbody>
+  </table>
+
+    <div class="row">
+      <div class="leagueLinks small-6 small-offset-3 medium-8 medium-offset-2 large-10 columns large-offset-2 ">
+        <div class="publicLink"><%= link_to "Click here to see available leagues!", leagues_path%></div>
+        <div class="privateLink"><%= link_to "Click here to create a custom league!", new_league_path%></div>
+      </div>
+    </div>
+<% else %>
+  <div class="row">
+  <p class = "small-8 small-offset-2 large-10  columns introBlub">
+    Each week you pick the winners of all games on the NFL schedule.<br> You'll then assign a confidence score to each game.<br>
+    Pick the winner correctly, gain that many points.<br> Otherwise you lose that many points.
+    <br>
+    <button class="signInUp"><%= link_to 'Click here to Sign Up', new_user_registration_path %></button>
+    <button class="signInUp"><%= link_to 'Click here to Sign In', new_user_session_path %></button>
+  </p>
+</div>
+<% end %>
+</div>
