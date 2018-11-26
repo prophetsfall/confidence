@@ -53,10 +53,14 @@
               <% picks.each do |pick| %>
               <% team = Team.find(pick.winning_team) %>
               <td class="boardPickRow">
-                <% if pick.winning_team == game.winner_id %>
-                  <span class = "pickWinner"><%="#{team.team_name} | #{pick.confidence}"%></span>
+                  <% if game.winner%>
+                  <% if pick.winning_team == game.winner_id %>
+                    <span class = "pickWinner"><%="#{team.team_name} | #{pick.confidence}"%></span>
+                  <% else %>
+                    <span class = "pickLoser"><%="#{team.team_name} | #{pick.confidence}"%></span>
+                  <% end %>
                 <% else %>
-                  <span class = "pickLoser"><%="#{team.team_name} | #{pick.confidence}"%></span>
+                  <span ><%="#{team.team_name} | #{pick.confidence}"%></span>
                 <% end %>
               </td>
               <% end %>
