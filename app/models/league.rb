@@ -26,6 +26,15 @@ class League < ApplicationRecord
     scores = scores.sort_by { |k| k[:score_season]}.reverse
   end
 
+  def self.contains_member?(league, member = nil)
+    members = league.memberships
+    included = false
+    if members.where(user:member).size >0
+      included = true
+    end
+    return included
+  end
+
   def self.valid_name?(str)
     return true if (/^[a-z\d\-_\s]+$/i.match(str))
     return false

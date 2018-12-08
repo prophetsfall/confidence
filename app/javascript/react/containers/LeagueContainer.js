@@ -10,10 +10,9 @@ class LeagueContainer extends Component {
     //this.validatePick = this.validatePick.bind(this)
   }
 componentDidMount() {
-  debugger
   fetch(`/api/v1/leagues`, {credentials: 'same-origin'})
   .then(response => {
-    debugger
+
     if (response.ok) {
       return response;
     } else {
@@ -25,10 +24,16 @@ componentDidMount() {
   .then(response => response.json())
   .then(body => {
     let leagues = body.leagues
-    debugger
     this.setState({leagues:leagues})
   })
   .catch(error => console.error(`Error in fetch: ${error.message}`));
+}
+
+chooseLeague(event){
+  event.preventDefault()
+  debugger
+  league = event.target
+
 }
 
 render() {
@@ -37,13 +42,16 @@ render() {
     return(
       <LeagueTile
         key={league.id}
+        id={league.id}
         name={league.league_name}
       />
 
     )
   }, this)
   return (
-    <div>this is a league index</div>
+    <div>this is a league index
+    <div>{leagues}</div>
+  </div>
   )
 }
 }

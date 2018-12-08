@@ -1,25 +1,18 @@
 import React, {Component} from 'react';
+import {Link} from 'react-router';
 
-class LeagueTile extends Component {
-  constructor(props) {
-    super(props);
-    this.state={
-      league:this.props.league,
-    }
-  }
 
-  render(){
-    debugger
-    let league = this.state.league
-      return(
-        <div>
-          <div className="small-6 medium-4 large-3 columns end gameTile">
-              {league}
-            </div>
-        </div>
-      )
-    }
-  }
+const LeagueTile = (props) => {
+   return(
+     <div>
+       <Link to={`api/v1/leagues/${props.id}`}>
+       {props.name}
+       </Link>
+     </div>
+   )
+}
+
+
 
 
 export default LeagueTile
