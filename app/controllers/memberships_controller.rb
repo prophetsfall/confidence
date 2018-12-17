@@ -19,6 +19,8 @@ class MembershipsController < ApplicationController
     @membership = Membership.find_by_id(params[:id])
     @picks = Pick.user_picks(@membership.user_id, @membership.league_id, Week.current_week)
     @picks.sort_by! { |pick| pick[:confidence] }.reverse!
+    @week = Week.current_week
+    @weeks = Week.season_weeks
   end
 
   def create

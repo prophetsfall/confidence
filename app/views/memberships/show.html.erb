@@ -1,27 +1,6 @@
 <h1 class="membershipHeader">
-  <%= @membership.user.username%>'s picks for week <%= Week.current_week.week_number %>
+<%= render "partials/week_select" %>
+<%= @membership.user.username%>'s picks for week <%= Week.current_week.week_number %>
 </h1>
 <div> <%= link_to "Games", league_games_path(@membership.league) %> </div>
-<div class="pickList">
-  <% @picks.each do |pick| %>
-  <% team = Team.find_by_id(pick[:winning_team]) %>
-  <% if team.team_name == "49ers" %>
-  <% team.team_name = "Niners" %>
-  <% end %>
-  <% game = Game.find(pick[:game_id]) %>
-<div>
-  <% if @user == @membership.user || game.gametime < Time.now %>
-    <% if game.winner && pick[:winning_team] == game.winner.id %>
-      <div class="pickedGame winner" id=<%="#{team.team_name}"%>>
-      <div><%= pick[:confidence] %></div>
-    <% elsif game.winner && pick[:winning_team] != game.winner.id%>
-    <div class="pickedGame loser" id=<%="#{team.team_name}"%>>
-      <div>-<%= pick[:confidence] %></div>
-    <% else %>
-    <div class="pickedGame" id=<%="#{team.team_name}"%>>
-        <div><%= pick[:confidence] %></div>
-    <% end %>
-  </div>
-  <% end %>
-  <% end %>
-</div>
+<%= render "partials/picklist" %>
