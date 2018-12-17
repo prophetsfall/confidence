@@ -189,3 +189,19 @@ h3 {
 .loser {
   border-color: red;
 }
+
+.weekList {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #000000;
+}
+
+.weekList li {
+  color: #008CBA;
+  font-size: 24px;
+  float: left;
+  padding-right: 10px;
+
+}

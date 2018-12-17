@@ -11,8 +11,13 @@ Rails.application.routes.draw do
   end
 
   resources :users
-  resources :memberships
+  resources :memberships do
+    resources :weeks, only:[:show]
+  end
 
+  resources :weeks, only: [:show] do
+    resources :leagues, only: [:show]
+  end
 
   resources :leagues do
     resources :games, only: [:index, :edit, :update]
@@ -20,7 +25,6 @@ Rails.application.routes.draw do
       resources :picks, only: [:show]
     end
     resources :picks, only: [:index, :edit,:update]
-
   end
 
   get'*path', to: 'users#index'
