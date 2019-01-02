@@ -14,9 +14,14 @@ class GamesController < ApplicationController
   end
 
   def update
+    @league = League.find(params[:league_id])
     game = Game.find(params[:id])
     winner = params[:game][:winner_id]
     game.update(winner_id:winner)
+    @league.memberships.each do |member|
+      Membership.calculate_weekly_score(member,@league,game.week)
+      Membership.calculate_season_score(member, @league, game.week.year)
+    end
     redirect_to league_games_path
   end
 

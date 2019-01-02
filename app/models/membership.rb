@@ -5,22 +5,21 @@ class Membership < ApplicationRecord
 
   validates :user_id, uniqueness: { scope: :league_id, message: "You already belong to this league" }
 
-  def self.season_score(user, league, year)
+  def self.calculate_season_score(member,league,year)
     weeks = Week.where('year = ?', year)
-    membership = Membership.where('user_id = ? AND league_id = ?', user,league).first
-    season_score = membership.season_score
+    season_score = member.season_score
     season_score = 0
     weeks.each do |week|
-      week_score = Membership.weekly_score(membership.user_id, membership.league_id,week.id)
+      week_score = Membership.calculate_weekly_score(member, member.league,week)
       season_score += week_score
     end
+    member.update(season_score:season_score)
     season_score
   end
 
-
-  def self.weekly_score(user, league, week)
+  def self.calculate_weekly_score(user, league, week)
     score = 0
-    picks = Pick.user_picks(user, league, week)
+    picks = Pick.user_picks(user.user_id, league.id, week.id)
     picks.each do |pick|
       game = Game.find(pick[:game_id])
       if game.winner_id
@@ -31,8 +30,7 @@ class Membership < ApplicationRecord
         end
       end
     end
-    membership = Membership.where('user_id = ? AND league_id = ?', user, league)
-    membership.update(weekly_score:score)
+    user.update(weekly_score:score)
     score
   end
 end
