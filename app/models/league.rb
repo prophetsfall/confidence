@@ -20,8 +20,8 @@ class League < ApplicationRecord
       {
         member_id: member.id,
         username: member.user.username,
-        score_week: Membership.weekly_score(member.user_id,league.id, week ),
-        score_season: Membership.season_score(member.user_id, league.id, Week.current_week.year)
+        score_week: member.weekly_score,
+        score_season: member.season_score
       }
     end
     scores = scores.sort_by { |k| k[:score_season]}.reverse
