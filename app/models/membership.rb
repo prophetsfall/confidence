@@ -33,4 +33,20 @@ class Membership < ApplicationRecord
     user.update(weekly_score:score)
     score
   end
+
+  def self.show_weekly_score(member,league,week)
+    score = 0
+    picks = Pick.user_picks(member.user_id, league.id, week.id)
+    picks.each do |pick|
+      game = Game.find(pick[:game_id])
+      if game.winner_id
+        if pick[:winning_team] == game.winner_id
+          score += pick[:confidence]
+        else
+          score -= pick[:confidence]
+        end
+      end
+    end
+    score
+  end
 end

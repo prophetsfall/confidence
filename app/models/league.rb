@@ -13,16 +13,17 @@ class League < ApplicationRecord
   end
 
   def self.league_scores(league, week)
-    league = league
-    week = week
     members = league.memberships
     scores = members.map do |member|
       {
         member_id: member.id,
         username: member.user.username,
-        score_week: member.weekly_score,
+        score_week: nil,
         score_season: member.season_score
       }
+    end
+    scores.each do | score|
+      score[:score_week] = Membership.show_weekly_score(Membership.find(score[:member_id]), league, week)
     end
     scores = scores.sort_by { |k| k[:score_season]}.reverse
   end
