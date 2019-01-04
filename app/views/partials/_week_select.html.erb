@@ -1,0 +1,18 @@
+<% if @weeks %>
+  <% if @membership %>
+    <ul class="weekList">
+      <li> Select Week</li>
+      <% @weeks.each do |week| %>
+        <li> <%= link_to week.week_number, membership_week_path(@membership, week) %></li>
+      <% end %>
+    </ul>
+  <% end %>
+  <% if @league %>
+    <ul class="weekList">
+      <li> Select Week</li>
+      <% @weeks.each do |week| %>
+        <li> <%= link_to week.week_number, week_league_path(week, @league) %></li>
+      <% end %>
+    </ul>
+  <% end %>
+<% end %>

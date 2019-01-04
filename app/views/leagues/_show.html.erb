@@ -20,22 +20,29 @@
           </tr>
           <%end%>
         </tbody>
+        <tfoot>
+          <tr>
+            <td>
+          <%= render "partials/week_select" %>
+        </td>
+        </tr>
+        </tfoot>
       </table>
     </div>
 
-    <% if !@members.include?(User.find_by_id(current_user.id)) %>
+    <% if !@members.include?(@member) %>
       <%= link_to "Join this league", league_memberships_path(@league), {method: :post,class:"joinPickLink"}  %>
     <% else %>
       <% if @games %>
         <% if @picks.length ==0  %>
-          <%= link_to "Click here to pick the games!",league_picks_path(@league.id),{class:"joinPickLink"}  %>
+          <%= link_to "Click here to pick the games!",league_picks_path(@league),{class:"joinPickLink"}  %>
         <% else %>
-          <h3 id="pickLink"><%= link_to "Edit your picks here",  league_picks_path(@league.id),{class:"joinPickLink"} %></h3>
+          <h3 id="pickLink"><%= link_to "Edit your picks here",  league_picks_path(@league),{class:"joinPickLink"} %></h3>
         <% end %>
       <%end %>
     <% end %>
-    <% if @current_week.main_slate_start %>
-    <% if @games && Time.now > @current_week.main_slate_start %>
+    <% if @week.main_slate_start %>
+    <% if @games && Time.now > @week.main_slate_start %>
     <div class ="leaguePicks">
       <table role="grid" class="row">
         <thead class="row gamePickGrid">
@@ -49,30 +56,37 @@
           <% away =Team.away(game)  %>
           <% home =Team.home(game)  %>
           <tr pickGridLine>
-            <td headers="game"><%=away.team_name%> @ <%= home.team_name %> </td>
+              <td headers="game"><%=away.team_name%> @ <%= home.team_name %></td>
           <% picks = Game.game_picks(game, @league, @members) %>
               <% picks.each do |pick| %>
               <% team = Team.find(pick.winning_team) %>
               <td class="boardPickRow">
-                <span><%="#{team.team_name} | #{pick.confidence}"%></span>
+                  <% if game.winner%>
+                  <% if pick.winning_team == game.winner_id %>
+                    <span class = "pickWinner"><%="#{team.team_name} | #{pick.confidence}"%></span>
+                  <% else %>
+                    <span class = "pickLoser"><%="#{team.team_name} | #{pick.confidence}"%></span>
+                  <% end %>
+                <% else %>
+                  <span ><%="#{team.team_name} | #{pick.confidence}"%></span>
+                <% end %>
               </td>
               <% end %>
           </tr>
           <%end%>
         </tbody>
       </table>
-
      </div>
 
     <% else %>
-      <h2 class="gameHead">Games for Week <%= @current_week.week_number %></h2>
+      <h2 class="gameHead">Games for Week <%= @week.week_number %></h2>
       <h2 class="gameHead">Games for <%= @member.username %></h2>
       <div class="row">
         <% @games.each do |game| %>
         <% away =Team.away(game).team_name  %>
         <% home =Team.home(game).team_name  %>
 
-        <% pick = Pick.where('user_id = ? AND game_id = ? AND league_id = ?', User.find_by(username:@member.username), game.id, @league.id) %>
+        <% pick = Pick.where('user_id = ? AND game_id = ? AND league_id = ?', @member.id, game.id, @league.id) %>
         <% if away == "49ers" %>
           <% away = "Niners" %>
         <% end %>

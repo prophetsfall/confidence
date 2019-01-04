@@ -14,18 +14,22 @@ class LeaguesController < ApplicationController
 
   def show
     @league = League.find_by_id(params[:id])
-    @current_week = Week.current_week
-    games = @current_week.games
-    @games = games.sort
+    if params[:week_id]
+      @week = Week.find(params[:week_id])
+    else
+      @week = Week.current_week
+    end
+    @weeks = Week.season_weeks
+    games = @week.games
+    if games.length >0
+      @games = games.sort_by{|game| game.gametime}
+    end
     @member = current_user
-    @picks = Pick.user_picks(current_user.id, @league.id, @current_week.id)
-    @scores = League.league_scores(@league.id)
+    @picks = Pick.user_picks(current_user.id, @league.id, @week.id)
+    @scores = League.league_scores(@league, @week)
     if @league
-      @members = @league.users
-      @members = @members.sort_by{|member| member.id}
-      if @league.public_league? || @members.include?(User.find_by_id(current_user.id))
-        League.league_scores(@league.id)
-        @scores.sort_by! {|score| score[:score]}.reverse
+      @members = @league.users.sort_by{|member| member.id}
+      if @league.public_league? || @members.include?(@member)
         render :show
       else
         redirect_to leagues_path

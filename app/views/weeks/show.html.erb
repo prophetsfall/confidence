@@ -1,0 +1,7 @@
+<%= render "partials/week_select" %>
+<h2>Picks for week <%= @week.week_number %> </h2>
+<% if params[:membership_id] %>
+<%= render "partials/picklist" %>
+<% else %>
+<%= render template: "leagues/show" %>
+<% end %>
