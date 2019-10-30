@@ -14,7 +14,7 @@ class Api::V1::PicksController < ApplicationController
     end
     if @games.length > 0
       if @all_picks.length > 0
-        render json: {
+          render json: {
           games:game_details,
           availableScores: available_confidence_scores(@all_picks),
           picks:@picks,

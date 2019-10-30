@@ -24,7 +24,7 @@ Rails.application.routes.draw do
     resources :memberships, only: [:index, :new, :create, :show] do
       resources :picks, only: [:show]
     end
-    resources :picks, only: [:index, :edit,:update]
+    resources :picks
   end
 
   get'*path', to: 'users#index'

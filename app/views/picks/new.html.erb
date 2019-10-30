@@ -1,0 +1,9 @@
+<h1>Admin Pick Dashboard </h1>
+
+<% if !@current_member.commissioner? %>
+<h3> You are not authorized for this action</h3>
+<% else %>
+<h1> You are commish!</h1>
+<%= form_for(@pick) %>
+<% end %>
+ 

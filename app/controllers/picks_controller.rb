@@ -12,6 +12,18 @@ class PicksController < ApplicationController
 
   def edit;end
 
+  def new
+    @league = League.find_by_id(params[:league_id])
+    @current_week = Week.current_week
+    @games = @current_week.games
+    @memberships = @league.memberships
+    @current_member = Membership.where(user:current_user, league:@league)[0]
+  end
+
+  def create
+    
+  end
+
 
    protected
    def pick_params
