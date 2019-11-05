@@ -15,7 +15,7 @@ class Pick < ApplicationRecord
         }
     end
 
-   picks.sort_by! { pick| pick[:game_id] }
+   picks.sort_by! { pick | pick[:game_id] }
 
   end
 end

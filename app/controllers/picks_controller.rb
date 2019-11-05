@@ -21,7 +21,7 @@ class PicksController < ApplicationController
   end
 
   def create
-    
+
   end
 
 
