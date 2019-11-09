@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 // import GameTile from '../components/GameTile'
-import HookTile from '../components/HookTile'
+import HookTile from './HookTile'
+import DualSidedPicks from './DualSidedPicks'
 
 const HookFormContainer = (props) => {
 
@@ -26,6 +27,7 @@ const HookFormContainer = (props) => {
     })
     .then(response => response.json())
     .then(body => {
+
       let mainSlateStart = Date.parse(body.main)
       if( body.picks.length >0 )
       {setEditFlag(true)}
@@ -64,7 +66,6 @@ const HookFormContainer = (props) => {
 
   const handleConfidenceAssignment = (score, originalScore, gameId, winningTeam =0, pickId=0) => {
     let pickedgameId = gameId
-    let availableConfidenceScores = availableConfidenceScores
     let newAvailableScores = availableConfidenceScores.filter(eachScore => eachScore != score)
     if (originalScore) {
       let compareNumbers = (a,b) => {
@@ -81,6 +82,7 @@ const HookFormContainer = (props) => {
     let pick = [{id: pickId, winning_team:winnerId, confidence:score, game_id:pickedgameId}]
     let newPicks = picks.concat(pick)
     setAvailableConfidenceScores(newAvailableScores)
+
     setPicks(newPicks)
   }
 
@@ -179,9 +181,9 @@ const HookFormContainer = (props) => {
   return(
     <div className="row">
     <form className="small-12 columns fieldBackgroundForm" onSubmit={formSubmission}>
-    <div className="small-12 columns pickForm">
-    {gameTiles}
-    </div>
+    <DualSidedPicks
+      games={games}
+    />
     <input type="submit" value="Submit" className="submitButton" />
     </form>
     </div>

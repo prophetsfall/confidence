@@ -4,7 +4,7 @@ const HookTile = (props) => {
   let [score, setScore] = useState(props.confidenceScore)
   let [pickId, setPickId] = useState(props.pickId)
   let [winner, setWinner] = useState(props.selectedWinner)
-  let [gameId, setGameId] = useState(props.confidenceScore)
+  let [gameId, setGameId] = useState(props.gameId)
 
   const handleWinner = (event) => {
     let winner = parseInt(event.currentTarget.id)
@@ -29,10 +29,8 @@ const HookTile = (props) => {
     let currentSelection;
     let zeroValue;
     if (score != 0) {
-      currentSelection=
-      <option
-        className="dropDownOption"
-        value ={score}>
+      currentSelection =
+      <option className="dropDownOption" value ={score}>
         {score}
       </option>
       zeroValue =
@@ -85,6 +83,7 @@ const HookTile = (props) => {
     let scoreList;
     let availableScores = props.availableConfidenceScores
     scoreList = props.availableConfidenceScores.map((score) => {
+
       return (
         <option
           key={`${props.gameId}-${score}`}
