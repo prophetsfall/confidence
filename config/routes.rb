@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       resources :leagues, only: [] do
         resources :picks, only: [:index, :create]
       end
+      resources :memberships
     end
   end
 
