@@ -10,10 +10,22 @@ class Pick < ApplicationRecord
         {
           id: pick.id,
           winning_team: pick.winning_team,
-          confidence: pick.confidence,    
+          confidence: pick.confidence,
           game_id: pick.game_id
           }
       end
       picks
     end
+
+  def self.pick_details
+    users_picks = Pick.user_picks(user_id, league_id, week_id)
+    users_picks.map do |pick|
+      {
+        id:pick[:id],
+        game_id:pick[:game_id],
+        winning_team:pick[:winning_team],
+        confidence: pick[:confidence]
+      }
+    end
   end
+end

@@ -49,4 +49,17 @@ class Membership < ApplicationRecord
     end
     score
   end
+
+  def self.membership_serializer(memberships)
+    data = memberships.map do |membership|
+      {
+        id: membership.id,
+        user_id: membership.user_id,
+        name: membership.user.first_name,
+        league_id: membership.league_id,
+        league_name: membership.league.league_name
+      }
+    end
+    data
+  end
 end

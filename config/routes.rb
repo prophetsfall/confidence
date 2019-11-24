@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :leagues, only: [] do
+      resources :leagues, only: [:show] do
         resources :picks, only: [:index, :create]
       end
       resources :memberships

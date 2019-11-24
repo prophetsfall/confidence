@@ -61,6 +61,7 @@ class Api::V1::PicksController < ApplicationController
       end
     end
       if picks.length > 0
+        pick_details = Pick.pick_details(@current_user.id, @league_id,@week_id, )
         if picks.map(&:save)
           render json: {picks: pick_details, errors: errors}
         else
@@ -119,19 +120,5 @@ class Api::V1::PicksController < ApplicationController
         available_scores
       end
 
-      def pick_details
-        users_picks = Pick.user_picks(current_user.id, @league_id, @week_id)
-        users_picks.map do |pick|
-          pick_hash(pick)
-        end
-      end
 
-      def pick_hash(pick)
-        {
-          id:pick[:id],
-          game_id:pick[:game_id],
-          winning_team:pick[:winning_team],
-          confidence: pick[:confidence]
-        }
-      end
     end

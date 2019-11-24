@@ -12,7 +12,7 @@ class League < ApplicationRecord
     invite_only == 2
   end
 
-  def self.league_scores(league, week)
+  def self.league_scores(league, week=Week.current_week)
     members = league.memberships
     scores = members.map do |member|
       {
