@@ -19,18 +19,19 @@ class Membership < ApplicationRecord
 
   def self.calculate_weekly_score(user, league, week)
     score = 0
-    picks = Pick.user_picks(user.user_id, league.id, week.id)
-    picks.each do |pick|
-      game = Game.find(pick[:game_id])
-      if game.winner_id
-        if pick[:winning_team] == game.winner_id
-          score += pick[:confidence]
-        else
-          score -= pick[:confidence]
+    picks = Pick.user_picks(user.id, league.id, week.id)
+    if picks
+      picks.each do |pick|
+        game = Game.find(pick[:game_id])
+        if game.winner_id
+          if pick[:winning_team] == game.winner_id
+            score += pick[:confidence]
+          else
+            score -= pick[:confidence]
+          end
         end
       end
     end
-    user.update(weekly_score:score)
     score
   end
 
