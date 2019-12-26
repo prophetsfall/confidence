@@ -7,7 +7,8 @@ class UsersController < ApplicationController
       @week = Week.current_week
       @scores = []
       @memberships.each  do|membership|
-       @scores << scores ={league:membership.league_id,week:membership.weekly_score, year:membership.season_score}
+        weekly_score = Membership.calculate_weekly_score(membership.user, membership.league, Week.current_week)
+        @scores << scores ={league:membership.league_id,week:weekly_score, year:membership.season_score}
       end
     end
   end
