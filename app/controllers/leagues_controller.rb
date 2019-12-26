@@ -24,10 +24,13 @@ class LeaguesController < ApplicationController
     if games.length >0
       @games = games.sort_by{|game| game.gametime}
     end
-    @member = current_user
+    @member = Membership.where('league_id = ? and user_id = ?', @league.id, current_user.id)[0].user
     @picks = Pick.user_picks(current_user.id, @league.id, @week.id)
     @scores = League.league_scores(@league, @week)
     if @league
+      @league.memberships.each do|membership|
+        Membership.calculate_season_score(membership, membership.league, Week.current_week.year)
+      end
       @members = @league.users.sort_by{|member| member.id}
       if @league.public_league? || @members.include?(@member)
         render :show
