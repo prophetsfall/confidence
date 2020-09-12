@@ -1,13 +1,13 @@
-import React from 'react';
-import { Router, browserHistory, Route, IndexRoute } from 'react-router';
-import PicksFormContainer from './PicksFormContainer'
+import React from "react"
+import { BrowserRouter, Route, Switch } from "react-router-dom"
+import PickContainer from './PickContainer'
 
 const App = props => {
 
   return(
-    <Router history={browserHistory}>
-      <Route path='/leagues/:id/picks' component={PicksFormContainer} />
-    </Router>
+    <BrowserRouter>
+      <Route path='/leagues/:id/picks' component={PickContainer} />
+    </BrowserRouter>
   )
 }
 

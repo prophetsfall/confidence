@@ -1,19 +1,4 @@
-import React, { Component } from 'react';
-import GameTile from '../components/GameTile'
 
-class PicksFormContainer extends Component {
-  constructor(props) {
-    super(props);
-    this.state={
-      leagueID:0,
-      games: [],
-      availableConfidenceScores: [],
-      picks:[],
-      editFlag: false,
-      noGames: false,
-      mainSlate: null,
-      errors: ""
-    }
     this.handleSelectWinner = this.handleSelectWinner.bind(this)
     this.handleConfidenceAssignment = this.handleConfidenceAssignment.bind(this)
     this.formSubmission = this.formSubmission.bind(this)
