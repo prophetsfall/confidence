@@ -1,29 +1,5 @@
-<div class="pickList">
-  <% @picks.each do |pick| %>
-  <% team = Team.find_by_id(pick[:winning_team]) %>
-    <% if team.team_name == "49ers" %>
-    <% team.team_name = "Niners" %>
-  <% end %>
-  <% game = Game.find(pick[:game_id]) %>
-  <div class="row">
-    <% if @user == @membership.user || game.gametime < Time.now %>
-      <% if game.winner && pick[:winning_team] == game.winner.id %>
-        <div class="pickedGame winner" id=<%="#{team.team_name}"%>>
-        <div><%= pick[:confidence] %></div>
-        <% elsif game.winner && pick[:winning_team] != game.winner.id%>
-          <div class="pickedGame loser" id=<%="#{team.team_name}"%>> - <%= pick[:confidence] %></div>
-        <% else %>
-          <div class="pickedGame" id=<%="#{team.team_name}"%>><%= pick[:confidence] %></div>
-        <% end %>
-        </div>
-      <% end %>
-    <% end %>
-  </div>
-</div>
-
-
 <ul class=" row memberPicks">
-  <div class="columns small-4 small-offset-4">
+  <div class="columns small-10 small-offset-1 large-8 large-offset-2">
   <% @picks.each do |pick| %>
     <% team = Team.find_by_id(pick[:winning_team]) %>
       <% if team.team_name == "49ers" %>
