@@ -1,7 +1,20 @@
 <div class="game">
 <%= form_for [@league,@game], method: :patch do |f| %>
     <%= f.label :winner_id, "Winner" %>
-    <%= f.select :winner_id, options_from_collection_for_select(@teams, :id, :team_name)%>
+    <%= f.select :winner_id, options_from_collection_for_select(@teams, :id, :team_name, selected = nil)%>
+
+    <%= f.label :home_team_id, "Home Team" %>
+    <%= f.select :home_team_id, options_from_collection_for_select(@teams, :id, :team_name, @game.home_team_id)%>
+
+    <%= f.label :away_team_id, "Away Team" %>
+    <%= f.select :away_team_id, options_from_collection_for_select(@teams, :id, :team_name, @game.away_team_id)%>
+
+    <%= f.label :week_id, "Week" %>
+    <%= f.select :week_id, options_from_collection_for_select(@weeks, :id, :week_number, @game.week_id)%>
+
+    <%= f.label :gametime, "Game Time" %>
+    <%= f.datetime_local_field :gametime%>
+
     <%= f.submit %>
 <% end %>
 </div>

@@ -205,3 +205,13 @@ h3 {
   padding-right: 10px;
 
 }
+
+.memberPicks {
+  font-size: 18px;
+  font-weight: bolder;
+  list-style-type: none;
+}
+
+.memberPicks li {
+  display: inline-flex;
+}

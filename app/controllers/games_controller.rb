@@ -10,11 +10,15 @@ class GamesController < ApplicationController
   def edit
     @league = League.find(params[:league_id])
     @game = Game.find(params[:id])
-    @teams = Game.teams(@game)
+    @teams = Team.all
+    @weeks = Week.where(year:Week.current_week.year)
   end
 
   def update
     @league = League.find(params[:league_id])
+    @away_team = League.find(params[:away_team_id])
+    @home_team = League.find(params[:home_team_id])
+    @week = League.find(params[:week_id])
     game = Game.find(params[:id])
     winner = params[:game][:winner_id]
     game.update(winner_id:winner)
