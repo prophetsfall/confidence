@@ -121,15 +121,15 @@ h3 {
 
 .game {
     align-content: center;
-    margin: 2px;
+    display: block;
+    margin: auto;
     border-style: solid;
-    height: 18em;
+    height: auto;
     width:  15em;
     padding-top: 5px;
     padding-bottom: 5px;
     background-color: #486D30;
     opacity: .70;
-    overflow: hidden;
     font-weight: bolder;
 }
 
@@ -148,9 +148,9 @@ h3 {
 }
 
 .gameTeam {
-  height: 30%;
+  height: 100px;
   width: 80%;
-  font-size: 60em;
+  font-size: 50px;
 }
 
 .submitButton {

@@ -1,7 +1,7 @@
 class GamesController < ApplicationController
   before_action :validate_commissioner
 
-  def index
+  def index   
     @week = Week.current_week
     @games = Game.where(week:@week)
     @league = League.find(params[:league_id])
@@ -15,16 +15,22 @@ class GamesController < ApplicationController
   end
 
   def update
-    @league = League.find(params[:league_id])
-    @away_team = League.find(params[:away_team_id])
-    @home_team = League.find(params[:home_team_id])
-    @week = League.find(params[:week_id])
     game = Game.find(params[:id])
+    @league = League.find(params[:league_id])
+    @away_team = Team.find(params[:game][:away_team_id])
+    @home_team = Team.find(params[:game][:home_team_id])
+    @week = Week.find(params[:game][:week_id])
     winner = params[:game][:winner_id]
-    game.update(winner_id:winner)
+    game.update(
+      winner_id:winner,
+      away_team: @away_team,
+      home_team: @home_team,
+      week:@week,
+      gametime:params[:game][:gametime]
+    )
     @league.memberships.each do |member|
-      Membership.calculate_weekly_score(member,@league,game.week)
-      Membership.calculate_season_score(member, @league, game.week.year)
+      Membership.calculate_weekly_score(member,@league,@week)
+      Membership.calculate_season_score(member, @league,@week.year)
     end
     redirect_to league_games_path
   end

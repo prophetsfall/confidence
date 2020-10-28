@@ -12,8 +12,8 @@
     <%= f.label :week_id, "Week" %>
     <%= f.select :week_id, options_from_collection_for_select(@weeks, :id, :week_number, @game.week_id)%>
 
-    <%= f.label :gametime, "Game Time" %>
-    <%= f.datetime_local_field :gametime%>
+    <%= f.label :gametime %>
+    <%= f.datetime_field(:gametime) %>
 
     <%= f.submit %>
 <% end %>
