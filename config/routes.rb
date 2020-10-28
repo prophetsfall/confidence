@@ -22,7 +22,7 @@ Rails.application.routes.draw do
   resources :leagues do
     resources :games, only: [:index, :edit, :update]
     resources :memberships, only: [:index, :new, :create, :show] do
-      resources :picks, only: [:show]
+      resources :picks, only: [:show, :new, :create]
     end
     resources :picks, only: [:index, :edit,:update]
   end
