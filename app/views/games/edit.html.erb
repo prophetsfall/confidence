@@ -1,7 +1,7 @@
 <div class="game">
 <%= form_for [@league,@game], method: :patch do |f| %>
     <%= f.label :winner_id, "Winner" %>
-    <%= f.select :winner_id, options_from_collection_for_select(@teams, :id, :team_name, selected = nil)%>
+    <%= f.select :winner_id, options_from_collection_for_select(@teams, :id, :team_name) %>
 
     <%= f.label :home_team_id, "Home Team" %>
     <%= f.select :home_team_id, options_from_collection_for_select(@teams, :id, :team_name, @game.home_team_id)%>

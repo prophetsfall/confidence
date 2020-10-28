@@ -1,0 +1,23 @@
+<div class="callout">
+<%= form_for [@league,@membership,@pick], method: :post do |f| %>
+
+    <%= f.label :game %>
+    <%= f.select(:game_id, options_from_collection_for_select(@games, :id, :id)) %>
+
+    <%= f.label :winning_team %>
+    <%= f.select(:winning_team, options_from_collection_for_select(@teams, :id, :team_name)) %>
+
+    <%= f.label :confidence %>
+    <%= f.number_field :confidence %>
+
+    <%= f.submit %>
+<% end %>
+
+<ul>
+<% @games.each do |game| %>
+  <li>
+    <%= "#{game.id}:ID - #{game.home_team.team_name} vs #{game.away_team.team_name}" %>
+  </li>
+<% end %>
+</ul>
+</div>
