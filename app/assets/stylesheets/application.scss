@@ -34,8 +34,41 @@ h1 {
   color: white;
   margin-bottom: 0px;
 }
+
 .ul {
  font-size: 24px;
+}
+
+.pickTile {
+  padding: 2px;
+  margin: 5px;
+}
+
+.pickImg {
+  border-style: groove;
+  border-width: thin;
+  border-radius: 10%;
+  border-color: grey;
+  width: auto;
+  height: 100%;
+
+}
+
+.pickBox {
+  border-style: ridge;
+  border-width: thick;
+  border-radius: 15%;
+}
+
+.pickSelector {
+  border-radius: 8px;
+  height: 50%;
+  width:auto;
+}
+
+.pickDate {
+  display: inline-block;
+  height: 100%;
 }
 
 .welcome {
@@ -66,7 +99,6 @@ h1 {
   height: 28rem;
   background-color: #486D30;
   opacity: .90;
-
 }
 
 .awayTeam {
@@ -113,11 +145,9 @@ h1 {
   border-color: black;
 }
 
-
 h3 {
   text-align: center;
 }
-
 
 .game {
     align-content: center;
@@ -203,5 +233,4 @@ h3 {
   font-size: 24px;
   float: left;
   padding-right: 10px;
-
 }

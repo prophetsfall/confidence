@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react'
+import PickTile from '../components/PickTile'
 
 const PickContainer = (props) => {
   let [leagueId, setLeagueId] = useState(null)
@@ -11,7 +12,7 @@ const PickContainer = (props) => {
   let [errors, setErrors] = useState("")
 
   useEffect(() => {
-    leagueId = 2
+    leagueId = props.match.params.id
     fetch(`/api/v1/leagues/${leagueId}/picks`, {credentials: 'same-origin'})
     .then(response => {
       if (response.ok) {
@@ -34,7 +35,7 @@ const PickContainer = (props) => {
         } else {
           setEditFlag(false)
         }
-        setLeagueId(leagueID)
+        setLeagueId(leagueId)
         setPicks(body.picks)
         setAvailableScores(body.availableScores)
         setGames(body.games)
@@ -43,12 +44,29 @@ const PickContainer = (props) => {
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }, [])
 
-  debugger
+//iterate over games to create pick tiles. Each pick tile should have its state managed by
+
+  let pickMap = games.map(game => {
+    return(
+    <PickTile
+      key={game.id}
+      gameId={game.id}
+      awayName={game.away_team_name}
+      homeName={game.home_team_name}
+      awayId={game.away_team_id}
+      homeId={game.home_team_id}
+      homeLocation={game.home_team_location}
+      awayLocation={game.away_team_location}
+      winnerId={game.winner_id}
+     />)
+  })
 
   return(
-    <>
-      Yes this is a pick thing
-    </>
+    <div className="row">
+      <div className="columns small-12">
+        {pickMap}
+      </div>
+    </div>
   )
 }
 

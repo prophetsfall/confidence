@@ -137,4 +137,4 @@ class GameTile extends Component {
     }
 
 
-    export default GameTile
+    export default ZGameTile
