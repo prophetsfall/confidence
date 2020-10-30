@@ -5,8 +5,8 @@
       <% if team.team_name == "49ers" %>
       <% team.team_name = "Niners" %>
     <% end %>
+    <% game = Game.find(pick[:game_id]) %>
     <li><% if @user == @membership.user || game.gametime < Time.now %>
-      <% game = Game.find(pick[:game_id]) %>
       <% if game.winner && pick[:winning_team] == game.winner.id %>
         <span class="pickedGame winner" id=<%="#{team.team_name}"%>>
         <span><%= pick[:confidence] %></span>
