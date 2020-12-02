@@ -1,7 +1,7 @@
 class GamesController < ApplicationController
   before_action :validate_commissioner
 
-  def index   
+  def index
     @week = Week.current_week
     @games = Game.where(week:@week)
     @league = League.find(params[:league_id])
@@ -21,6 +21,9 @@ class GamesController < ApplicationController
     @home_team = Team.find(params[:game][:home_team_id])
     @week = Week.find(params[:game][:week_id])
     winner = params[:game][:winner_id]
+    if winner != @away_team.id && winner != @home_team.id
+      winner = nil
+    end
     game.update(
       winner_id:winner,
       away_team: @away_team,
