@@ -20,7 +20,7 @@ class GamesController < ApplicationController
     @away_team = Team.find(params[:game][:away_team_id])
     @home_team = Team.find(params[:game][:home_team_id])
     @week = Week.find(params[:game][:week_id])
-    winner = params[:game][:winner_id]
+    winner = params[:game][:winner_id].to_i
     if winner != @away_team.id && winner != @home_team.id
       winner = nil
     end
